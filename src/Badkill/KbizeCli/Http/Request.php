@@ -2,9 +2,10 @@
 namespace Badkill\KbizeCli\Http;
 
 use Guzzle\Http\Message\EntityEnclosingRequest as GuzzleEntityEnclosingRequest;
+use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use Badkill\KbizeCli\Http\Exception\HttpException;
 
-class Request implements RequestInterface
+class Request extends GuzzleEntityEnclosingRequest implements RequestInterface
 {
     private $request;
 
@@ -15,7 +16,12 @@ class Request implements RequestInterface
 
     public function __call($method, $args)
     {
-        return call_user_func_array(array($this->request, $method), $args);
+        $result = call_user_func_array(array($this->request, $method), $args);
+        if ($result instanceof GuzzleEntityEnclosingRequest) {
+            return $this;
+        }
+
+        return $result;
     }
 
     public function send()

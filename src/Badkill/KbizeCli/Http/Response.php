@@ -17,24 +17,17 @@ class Response extends GuzzleResponse
         /* $this->setRawResponse($rawResponse); */
     }
 
-    /* public function __construct($statusCode, $headers = null, $body = null) */
-    /* { */
-    /*     parent::__construct($statusCode, $headers, $body); */
-    /*     $this->setRawResponse($this); */
-    /* } */
+    public function json()
+    {
+        try {
+            $data = parent::json();
+        } catch (\Exception $e) {
+            //TODO:! throw better exception
+            throw new \RuntimeException(
+                "Body isn't a valid json: `{$this->body}`\n" . $e->getMessage()
+            );
+        }
 
-    /* public function __call($method, $args) */
-    /* { */
-    /*     return call_user_func_array(array($this->rawResponse, $method), $args); */
-    /* } */
-
-    /* private function setRawResponse(GuzzleResponse $rawResponse) */
-    /* { */
-    /*     $this->rawResponse = $rawResponse; */
-    /* } */
-
-    /* public function __construct(GuzzleResponse $rawResponse) */
-    /* { */
-    /*     $this->rawResponse = $rawResponse; */
-    /* } */
+        return $data;
+    }
 }
