@@ -107,24 +107,4 @@ class Sdk implements ApiInterface
 
         return $data;
     }
-
-    //FIXME:! wrap the response and inject this method
-    /* private function ensureIsValidResponse($request) */
-    /* { */
-    /*     $isValid = true; */
-    /*     $response = $request->send(); */
-
-    /*     try { */
-    /*         $data = $response->json(); */
-    /*     } catch (\Exception $e) { */
-    /*         $isValid = false; */
-    /*         $data = array('error' => 'Invalid json in response: `' . $response->getBody() . '`'); */
-    /*     } */
-
-    /*     if ($response->isError() || !$isValid) { */
-    /*         throw new ServerErrorResponseException($request, $response); */
-    /*     } */
-
-    /*     return $data; */
-    /* } */
 }
