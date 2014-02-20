@@ -1,8 +1,8 @@
 <?php
-namespace Badkill\KbizeCli\Sdk;
+namespace KbizeCli\Sdk;
 
-use Badkill\KbizeCli\Http\ClientInterface;
-use Badkill\KbizeCli\Http\Exception\ServerErrorResponseException;
+use KbizeCli\Http\ClientInterface;
+use KbizeCli\Http\Exception\ServerErrorResponseException;
 
 class Sdk implements ApiInterface
 {

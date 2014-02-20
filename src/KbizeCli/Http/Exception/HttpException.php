@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Http\Exception;
+namespace KbizeCli\Http\Exception;
 
 use Guzzle\Http\Exception\HttpException as GuzzleHttpException;
 use Guzzle\Http\Exception\BadResponseException;
@@ -13,7 +13,7 @@ abstract class HttpException
     public static function from(GuzzleHttpException $e)
     {
         if ($e instanceof ServerErrorResponseException) {
-            return new \Badkill\KbizeCli\Http\Exception\ServerErrorResponseException($e);
+            return new \KbizeCli\Http\Exception\ServerErrorResponseException($e);
         }
 
         if ($e instanceof ClientErrorResponseException) {
@@ -23,7 +23,7 @@ abstract class HttpException
                 return ForbiddenException::factory($e->getRequest(), $response);
             }
 
-            return new \Badkill\KbizeCli\Http\Exception\ClientErrorResponseException($e);
+            return new \KbizeCli\Http\Exception\ClientErrorResponseException($e);
         }
     }
 }

@@ -1,13 +1,13 @@
 <?php
-namespace Badkill\KbizeCli\Http\Exception;
+namespace KbizeCli\Http\Exception;
 
-use Guzzle\Http\Exception\ServerErrorResponseException as GuzzleServerErrorResponseException;
+use Guzzle\Http\Exception\ClientErrorResponseException as GuzzleClientErrorResponseException;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
-class ServerErrorResponseException extends GuzzleServerErrorResponseException
+class ClientErrorResponseException extends GuzzleClientErrorResponseException
 {
-    public function __construct(GuzzleServerErrorResponseException $e)
+    public function __construct(GuzzleClientErrorResponseException$e)
     {
         $this->e = $e;
     }

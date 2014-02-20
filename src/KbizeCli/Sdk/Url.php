@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Sdk;
+namespace KbizeCli\Sdk;
 
 class Url
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Http\Exception;
+namespace KbizeCli\Http\Exception;
 
 class ForbiddenException extends ClientErrorResponseException
 {

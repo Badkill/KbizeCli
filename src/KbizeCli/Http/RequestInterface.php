@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Http;
+namespace KbizeCli\Http;
 
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 

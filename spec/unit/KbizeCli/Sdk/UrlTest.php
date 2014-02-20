@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Sdk;
+namespace KbizeCli\Sdk;
 
 class UrlTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Http;
+namespace KbizeCli\Http;
 
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 use Guzzle\Http\Client as GuzzleClient;
@@ -7,8 +7,8 @@ use Guzzle\Http\Message\EntityEnclosingRequest as GuzzleEntityEnclosingRequest;
 use Guzzle\Common\Event as Event;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Badkill\KbizeCli\Http\Exception\ForbiddenException;
-use Badkill\KbizeCli\Http\Exception\RequestException;
+use KbizeCli\Http\Exception\ForbiddenException;
+use KbizeCli\Http\Exception\RequestException;
 
 class Client implements ClientInterface
 {

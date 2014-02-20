@@ -1,5 +1,5 @@
 <?php
-namespace Badkill\KbizeCli\Http;
+namespace KbizeCli\Http;
 
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 use Guzzle\Plugin\Mock\MockPlugin as GuzzleMockPlugin;
@@ -53,7 +53,7 @@ class ClientTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Badkill\KbizeCli\Http\Exception\ForbiddenException
+     * @expectedException KbizeCli\Http\Exception\ForbiddenException
      */
     public function test403ResponseCodeBubbleUpAForbiddenException()
     {
@@ -68,7 +68,7 @@ class ClientTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Badkill\KbizeCli\Http\Exception\ServerErrorResponseException
+     * @expectedException KbizeCli\Http\Exception\ServerErrorResponseException
      */
     public function testNot200ResponseCodeBubbleUpARequestException()
     {

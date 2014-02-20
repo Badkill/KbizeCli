@@ -1,19 +1,19 @@
 <?php
-namespace Badkill\KbizeCli\Sdk;
+namespace KbizeCli\Sdk;
 
-use Badkill\KbizeCli\Http\ClientInterface;
-use Badkill\KbizeCli\Http\Response;
+use KbizeCli\Http\ClientInterface;
+use KbizeCli\Http\Response;
 
 class SdkTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->client = $this->getMock('Badkill\KbizeCli\Http\ClientInterface', array_merge(
-            get_class_methods('Badkill\KbizeCli\Http\ClientInterface'),
+        $this->client = $this->getMock('KbizeCli\Http\ClientInterface', array_merge(
+            get_class_methods('KbizeCli\Http\ClientInterface'),
             get_class_methods('Guzzle\Http\ClientInterface')
         ));
 
-        $this->request = $this->getMock('Badkill\KbizeCli\Http\RequestInterface');
+        $this->request = $this->getMock('KbizeCli\Http\RequestInterface');
     }
 
     public function testLoginWithRightCredentialsReturnsAnArray()
