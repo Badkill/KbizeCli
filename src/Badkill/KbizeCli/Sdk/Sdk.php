@@ -15,20 +15,18 @@ class Sdk implements ApiInterface
 
     public function login($email, $password)
     {
-        $request = $this->client->post(sprintf(
-            'login/email/%s/pass/%s',
-            urlencode($email),
-            $password
-        ));
+        $request = $this->client->post('login', [], [
+            'email' => $email,
+            'pass' => $password,
+        ]);
 
-        $data = $this->ensureIsValidResponse($request);
-
-        return $data;
+        return $this->send($request);
     }
 
     public function getProjectsAndBoards()
     {
-
+        $request = $this->client->post('get_projects_and_boards');
+        return $this->send($request);
     }
 
     public function getBoardStructure($boardId)
@@ -36,33 +34,97 @@ class Sdk implements ApiInterface
 
     }
 
-    public function getAllTasks($boardId)
+    public function getFullBoardStructure($boardId)
     {
 
     }
 
-    public function getTaskDetails($boardId, $taskId)
+    public function getBoardSettings($boardId)
     {
 
     }
 
-    //FIXME:! wrap the response and inject this method
-    private function ensureIsValidResponse($request)
+    public function getBoardActivities($boardId, $fromDate, $toDate, array $parameters = array())
     {
-        $isValid = true;
+
+    }
+
+    public function createNewTask($boardId, array $parameters = array())
+    {
+
+    }
+
+    public function deleteTask($boardId, $taskId)
+    {
+
+    }
+
+    public function getTaskDetails($boardId, $taskId, array $parameters = array())
+    {
+
+    }
+
+    public function getAllTasks($boardId, array $parameters = array())
+    {
+
+    }
+
+    public function addComment($taskId, $comment)
+    {
+
+    }
+
+    public function moveTask($boardId, $taskId, $column, array $parameters = array())
+    {
+
+    }
+
+    public function editTask($boardId, $taskId, array $parameters = array())
+    {
+
+    }
+
+    public function blockTask($boardId, $taskId, $event, $blockreason)
+    {
+
+    }
+
+    public function addSubtask($taskParent, array $parameters = array())
+    {
+
+    }
+
+    public function editSubtask($boardId, $subtaskId, array $parameters = array())
+    {
+
+    }
+
+    private function send($request)
+    {
         $response = $request->send();
-
-        try {
-            $data = $response->json();
-        } catch (\Exception $e) {
-            $isValid = false;
-            $data = array('error' => 'Invalid json in response: `' . $response->getBody() . '`');
-        }
-
-        if ($response->isError() || !$isValid) {
-            throw new ServerErrorResponseException($request, $repsonse);
-        }
+        /* $response->ensureIsValid(); */
+        $data = $response->json();
 
         return $data;
     }
+
+    //FIXME:! wrap the response and inject this method
+    /* private function ensureIsValidResponse($request) */
+    /* { */
+    /*     $isValid = true; */
+    /*     $response = $request->send(); */
+
+    /*     try { */
+    /*         $data = $response->json(); */
+    /*     } catch (\Exception $e) { */
+    /*         $isValid = false; */
+    /*         $data = array('error' => 'Invalid json in response: `' . $response->getBody() . '`'); */
+    /*     } */
+
+    /*     if ($response->isError() || !$isValid) { */
+    /*         throw new ServerErrorResponseException($request, $response); */
+    /*     } */
+
+    /*     return $data; */
+    /* } */
 }

@@ -34,11 +34,82 @@ class SdkTest extends \PHPUnit_Framework_TestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with("login/email/" . urlencode($email) . "/pass/$password")
+            ->with('login', array(), [
+                'email' => $email,
+                'pass' => $password,
+            ])
             ->will($this->returnValue($this->request));
 
         $sdk = new Sdk($this->client);
         $this->assertEquals($data, $sdk->login($email, $password));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testHtmlResponseTriggersAnException()
+    {
+        $email = 'user@example.com';
+        $password  = 'secretPassword';
+
+        $this->requestReturnsJson('<html>test</html>', 200);
+
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('login', array(), [
+                'email' => $email,
+                'pass' => $password,
+            ])
+            ->will($this->returnValue($this->request));
+
+        $sdk = new Sdk($this->client);
+        $sdk->login($email, $password);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testExceptionFromClientIsBubbleUpAnException()
+    {
+        $email = 'wrong@email.com';
+        $password  = 'wrongPassword';
+
+        $this->requestReturnsException(new \RuntimeException());
+
+        $this->client->expects($this->once())
+            ->method('post')
+            ->will($this->returnValue($this->request));
+
+        $sdk = new Sdk($this->client);
+        $sdk->login($email, $password);
+    }
+
+    public function testGetProjectsAndBoards()
+    {
+        $data = array(
+            'projects' => array (
+                0 => array (
+                    'name' => 'Onebip',
+                    'id' => '1',
+                    'boards' => array (
+                        0 => array (
+                            'name' => 'Main development',
+                            'id' => '2',
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        $this->requestReturnsJson($data);
+
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('get_projects_and_boards')
+            ->will($this->returnValue($this->request));
+
+        $kbize = new Sdk($this->client);
+        $this->assertEquals($data, $kbize->getProjectsAndBoards());
     }
 
     private function requestReturnsJson($jsonData, $httpStatusCode = 200)
@@ -49,5 +120,12 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $this->request->expects($this->once())
             ->method('send')
             ->will($this->returnValue($response));
+    }
+
+    private function requestReturnsException(\Exception $e)
+    {
+        $this->request->expects($this->once())
+            ->method('send')
+            ->will($this->throwException($e));
     }
 }
