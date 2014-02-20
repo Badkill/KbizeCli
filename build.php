@@ -46,7 +46,7 @@ $defaultStub = $phar->createDefaultStub('run.php');
 $stub = "#!/usr/bin/env php \n" . $defaultStub;
 $phar->setStub($stub);
 
-$phar->compressFiles(\Phar::GZ);
+$phar->compress(\Phar::GZ);
 
 $phar->stopBuffering();
 
