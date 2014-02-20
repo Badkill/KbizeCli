@@ -1,3 +1,6 @@
 coverage
-vendor/
 cache/*
+/vendor/*
+/build/*
+composer.lock
+.buildpath
