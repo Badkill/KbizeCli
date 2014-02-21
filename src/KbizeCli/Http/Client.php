@@ -44,6 +44,7 @@ class Client implements ClientInterface
         if ($result instanceof GuzzleEntityEnclosingRequest) {
             return new Request($result);
         }
+
         return $result;
     }
 

@@ -32,4 +32,22 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('KbizeCli\User', $user);
         $this->assertEquals($data, $user->toArray());
     }
+
+    /* public function testProjectsAndBoards() */
+    /* { */
+    /*     $data = [ */
+    /*         'username' => 'name.surname', */
+    /*         'realname' => 'Name Surname', */
+    /*         'companyname' => 'Company', */
+    /*         'timezone' => '0:0', */
+    /*         'apikey' => 'UIcXtWGF1ldjKmSdYi6lP3WN8o1K4hMJQnOLkfTv', */
+    /*     ]; */
+
+    /*     $this->sdk->expects($this->once()) */
+    /*         ->method('getProjectsAndBoards') */
+    /*         ->with() */
+    /*         ->will($this->returnValue($data)); */
+
+    /*     $user = $this->gw->getProjectsAndBoards(); */
+    /* } */
 }
