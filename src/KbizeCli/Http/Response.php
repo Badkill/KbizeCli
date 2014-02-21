@@ -9,12 +9,11 @@ class Response extends GuzzleResponse
 
     public static function fromRawResponse(GuzzleResponse $rawResponse)
     {
-        $response = new static(
+        return new static(
             $rawResponse->getStatusCode(),
             $rawResponse->getHeaders(),
             $rawResponse->getBody()
         );
-        /* $this->setRawResponse($rawResponse); */
     }
 
     public function json()
