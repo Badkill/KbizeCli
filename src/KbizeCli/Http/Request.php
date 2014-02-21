@@ -5,7 +5,7 @@ use Guzzle\Http\Message\EntityEnclosingRequest as GuzzleEntityEnclosingRequest;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use KbizeCli\Http\Exception\HttpException;
 
-class Request extends GuzzleEntityEnclosingRequest implements RequestInterface
+class Request /*extends GuzzleEntityEnclosingRequest implements RequestInterface*/
 {
     private $request;
 
@@ -18,6 +18,7 @@ class Request extends GuzzleEntityEnclosingRequest implements RequestInterface
     {
         $result = call_user_func_array(array($this->request, $method), $args);
         if ($result instanceof GuzzleEntityEnclosingRequest) {
+            $this->request = $result;
             return $this;
         }
 
