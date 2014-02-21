@@ -1,0 +1,14 @@
+services:
+  httpClient:
+    class: KbizeCli\Http\Client
+    factory_class: KbizeCli\Http\Client
+    factory_method: fromConfig
+    arguments: [%api%]
+
+  sdk:
+    class: KbizeCli\Sdk\Sdk
+    arguments: ["@httpClient"]
+
+  gateway:
+    class: KbizeCli\Gateway
+    arguments: ["@sdk"]
