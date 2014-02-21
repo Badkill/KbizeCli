@@ -7,25 +7,27 @@ use KbizeCli\Http\Exception\ServerErrorResponseException;
 class Sdk implements ApiInterface
 {
     private $client;
+    private $apikey;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, $apikey = "")
     {
         $this->client = $client;
+        $this->apikey = $apikey;
     }
 
     public function login($email, $password)
     {
-        $request = $this->client->post('login', [], [
+        $request = $this->post('login', [
             'email' => $email,
             'pass' => $password,
-        ]);
+        ], false);
 
         return $this->send($request);
     }
 
     public function getProjectsAndBoards()
     {
-        $request = $this->client->post('get_projects_and_boards');
+        $request = $this->post('get_projects_and_boards');
         return $this->send($request);
     }
 
@@ -99,6 +101,20 @@ class Sdk implements ApiInterface
 
     }
 
+    public function setApikey($apikey)
+    {
+        $this->apikey = $apikey;
+
+        return $this;
+    }
+
+    private function post($url, array $data = array(), $needAuth = true)
+    {
+        return $this->client($needAuth)->post($url, [
+            'Content-Type' => 'application/json'
+        ], json_encode($data));
+    }
+
     private function send($request)
     {
         $response = $request->send();
@@ -106,5 +122,21 @@ class Sdk implements ApiInterface
         $data = $response->json();
 
         return $data;
+    }
+
+    private function client($needAuth = true)
+    {
+        if ($needAuth) {
+            $this->ensureIsValidApikey();
+        }
+
+        return $this->client;
+    }
+
+    private function ensureIsValidApikey()
+    {
+        if (!isset($this->apikey) || !$this->apikey) {
+            throw new \RuntimeException('Authentication (apikey) is required!'); //TODO: Change excpetion
+        }
     }
 }

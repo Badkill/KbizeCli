@@ -14,6 +14,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         ));
 
         $this->request = $this->getMock('KbizeCli\Http\RequestInterface');
+        $this->apikey = 'secret-api-key';
     }
 
     public function testLoginWithRightCredentialsReturnsAnArray()
@@ -31,14 +32,10 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->requestReturnsJson($data);
-
-        $this->client->expects($this->once())
-            ->method('post')
-            ->with('login', array(), [
-                'email' => $email,
-                'pass' => $password,
-            ])
-            ->will($this->returnValue($this->request));
+        $this->clientExpectation('login', [
+            'email' => $email,
+            'pass' => $password,
+        ], $this->request);
 
         $sdk = new Sdk($this->client);
         $this->assertEquals($data, $sdk->login($email, $password));
@@ -53,14 +50,10 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $password  = 'secretPassword';
 
         $this->requestReturnsJson('<html>test</html>', 200);
-
-        $this->client->expects($this->once())
-            ->method('post')
-            ->with('login', array(), [
-                'email' => $email,
-                'pass' => $password,
-            ])
-            ->will($this->returnValue($this->request));
+        $this->clientExpectation('login', [
+            'email' => $email,
+            'pass' => $password,
+        ], $this->request);
 
         $sdk = new Sdk($this->client);
         $sdk->login($email, $password);
@@ -86,20 +79,9 @@ class SdkTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProjectsAndBoards()
     {
-        $data = array(
-            'projects' => array (
-                0 => array (
-                    'name' => 'Onebip',
-                    'id' => '1',
-                    'boards' => array (
-                        0 => array (
-                            'name' => 'Main development',
-                            'id' => '2',
-                        ),
-                    ),
-                ),
-            ),
-        );
+        $data = [
+            'foo' => 'bar'
+        ];
 
         $this->requestReturnsJson($data);
 
@@ -108,8 +90,26 @@ class SdkTest extends \PHPUnit_Framework_TestCase
             ->with('get_projects_and_boards')
             ->will($this->returnValue($this->request));
 
-        $kbize = new Sdk($this->client);
-        $this->assertEquals($data, $kbize->getProjectsAndBoards());
+        $sdk = new Sdk($this->client);
+        $sdk->setApikey($this->apikey);
+        $this->assertEquals($data, $sdk->getProjectsAndBoards());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testCallAnApiThatRequireAuthenticationTriggerAnExceptionIfApikeyIsMissing()
+    {
+        $sdk = new Sdk($this->client);
+        $sdk->getProjectsAndBoards();
+    }
+
+    private function clientExpectation($url, $data)
+    {
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with($url, ['Content-Type' => 'application/json'], json_encode($data))
+            ->will($this->returnValue($this->request));
     }
 
     private function requestReturnsJson($jsonData, $httpStatusCode = 200)
