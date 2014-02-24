@@ -38,6 +38,14 @@ class Client implements ClientInterface
         return new static($config, $rawClient);
     }
 
+    public function setApikey($apikey)
+    {
+        $this->rawClient->setDefaultHeaders(array_merge(
+            $this->rawClient->getDefaultOption('headers'),
+            ['apikey' => $apikey]
+        ));
+    }
+
     public function __call($method, $args)
     {
         $result = call_user_func_array(array($this->rawClient, $method), $args);
@@ -46,20 +54,6 @@ class Client implements ClientInterface
         }
 
         return $result;
-    }
-
-    public function handleError(Event $event)
-    {
-        /* throw HttpException::from(); */
-
-        var_dump($event);
-
-        $response = $event['response'];
-        if ($response->getStatusCode() == 403) {
-            throw ForbiddenException::factory($event['request'], $response);
-        }
-
-        throw RequestException::factory($event['request'], $response);
     }
 
     protected function initOptionsResolver()

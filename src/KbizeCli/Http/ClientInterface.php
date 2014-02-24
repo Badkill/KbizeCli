@@ -7,5 +7,7 @@ use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 interface ClientInterface
 {
     public static function fromConfig(array $config, GuzzleClientInterface $rawClient);
+
+    public function setApikey($apikey);
 }
 
