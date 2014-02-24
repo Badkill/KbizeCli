@@ -2,24 +2,24 @@
 namespace KbizeCli\Http\Exception;
 
 use Guzzle\Http\Exception\ClientErrorResponseException as GuzzleClientErrorResponseException;
-use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Http\Message\Response;
 
 class ClientErrorResponseException extends GuzzleClientErrorResponseException
 {
-    public function __construct(GuzzleClientErrorResponseException$e)
+    public static function fromRaw(GuzzleClientErrorResponseException $raw)
     {
-        $this->e = $e;
-    }
+        $e = new static($raw->getMessage(), $raw->getCode(), $raw->getPrevious());
+        $e->setRaw($raw);
 
-    public static function factory(RequestInterface $request, Response $response)
-    {
-        $e = parent::factory($request, $response);
-        return new static($e);
+        return $e;
     }
 
     public function __call($method, $args)
     {
-        return call_user_func_array(array($this->e, $method), $args);
+        return call_user_func_array(array($this->raw, $method), $args);
+    }
+
+    private function setRaw(GuzzleClientErrorResponseException $raw)
+    {
+        $this->raw = $raw;
     }
 }

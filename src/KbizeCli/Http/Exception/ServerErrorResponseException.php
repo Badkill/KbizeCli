@@ -2,24 +2,24 @@
 namespace KbizeCli\Http\Exception;
 
 use Guzzle\Http\Exception\ServerErrorResponseException as GuzzleServerErrorResponseException;
-use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Http\Message\Response;
 
 class ServerErrorResponseException extends GuzzleServerErrorResponseException
 {
-    public function __construct(GuzzleServerErrorResponseException $e)
+    public static function fromRaw(GuzzleServerErrorResponseException $raw)
     {
-        $this->e = $e;
-    }
+        $e = new self($raw->getMessage(), $raw->getCode(), $raw->getPrevious());
+        $e->setRaw($raw);
 
-    public static function factory(RequestInterface $request, Response $response)
-    {
-        $e = parent::factory($request, $response);
-        return new static($e);
+        return $e;
     }
 
     public function __call($method, $args)
     {
-        return call_user_func_array(array($this->e, $method), $args);
+        return call_user_func_array(array($this->raw, $method), $args);
+    }
+
+    private function setRaw(GuzzleServerErrorResponseException $raw)
+    {
+        $this->raw = $raw;
     }
 }

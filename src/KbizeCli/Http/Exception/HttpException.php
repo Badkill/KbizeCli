@@ -13,17 +13,19 @@ abstract class HttpException
     public static function from(GuzzleHttpException $e)
     {
         if ($e instanceof ServerErrorResponseException) {
-            return new \KbizeCli\Http\Exception\ServerErrorResponseException($e);
+            return \KbizeCli\Http\Exception\ServerErrorResponseException::fromRaw($e);
         }
 
         if ($e instanceof ClientErrorResponseException) {
             $response = $e->getResponse();
 
             if ($response->getStatusCode() == 403) {
-                return ForbiddenException::factory($e->getRequest(), $response);
+                return ForbiddenException::fromRaw($e);
             }
 
-            return new \KbizeCli\Http\Exception\ClientErrorResponseException($e);
+            return \KbizeCli\Http\Exception\ClientErrorResponseException::fromRaw($e);
         }
+
+        return $e;
     }
 }
