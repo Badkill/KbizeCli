@@ -3,6 +3,7 @@ namespace KbizeCli\Sdk;
 
 use KbizeCli\Http\ClientInterface;
 use KbizeCli\Http\Response;
+use KbizeCli\Http\Exception\ClientErrorResponseException;
 
 class SdkTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,6 +40,27 @@ class SdkTest extends \PHPUnit_Framework_TestCase
 
         $sdk = new Sdk($this->client);
         $this->assertEquals($data, $sdk->login($email, $password));
+    }
+
+    /**
+     * @expectedException \KbizeCli\Sdk\Exception\ForbiddenException
+     */
+    public function testEveryExceptionsOnLoginMethodAreConvertedIntoForbiddenException()
+    {
+        $email = 'user@example.com';
+        $password  = 'secretPassword';
+
+        $this->request->expects($this->once())
+            ->method('send')
+            ->will($this->throwException(new ClientErrorResponseException()));
+
+        $this->clientExpectation('login', [
+            'email' => $email,
+            'pass' => $password,
+        ], $this->request);
+
+        $sdk = new Sdk($this->client);
+        $sdk->login($email, $password);
     }
 
     /**
@@ -96,7 +118,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \KbizeCli\Sdk\Exception\ForbiddenException
      */
     public function testCallAnApiThatRequireAuthenticationTriggerAnExceptionIfApikeyIsMissing()
     {

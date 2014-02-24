@@ -3,8 +3,10 @@ namespace KbizeCli\Sdk;
 
 use KbizeCli\Http\ClientInterface;
 use KbizeCli\Http\Exception\ServerErrorResponseException;
+use KbizeCli\Http\Exception\ClientErrorResponseException;
+use KbizeCli\Sdk\Exception\ForbiddenException;
 
-class Sdk implements ApiInterface
+class Sdk implements SdkInterface
 {
     private $client;
     private $apikey;
@@ -22,7 +24,11 @@ class Sdk implements ApiInterface
             'pass' => $password,
         ], false);
 
-        return $this->send($request);
+        try {
+            return $this->send($request);
+        } catch (ClientErrorResponseException $e) {
+            throw new ForbiddenException('Authentication failed');
+        }
     }
 
     public function getProjectsAndBoards()
@@ -104,6 +110,7 @@ class Sdk implements ApiInterface
     public function setApikey($apikey)
     {
         $this->apikey = $apikey;
+        $this->client->setApikey($apikey);
 
         return $this;
     }
@@ -136,7 +143,7 @@ class Sdk implements ApiInterface
     private function ensureIsValidApikey()
     {
         if (!isset($this->apikey) || !$this->apikey) {
-            throw new \RuntimeException('Authentication (apikey) is required!'); //TODO: Change excpetion
+            throw new ForbiddenException('Authentication (apikey) is required!');
         }
     }
 }
