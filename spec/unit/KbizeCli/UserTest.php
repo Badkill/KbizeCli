@@ -9,7 +9,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testUserWithoutApikeyIsNotAuthenticated()
     {
-        $user = new User([
+        $user = new User();
+        $user = $user->update([
             'email' => 'name@company.com',
             'username' => 'name.surname',
             'realname' => 'Name Surname',
@@ -22,7 +23,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testUserWithApikeyIsAuthenticated()
     {
-        $user = new User([
+        $user = new User();
+        $user = $user->update([
             'email' => 'name@company.com',
             'username' => 'name.surname',
             'realname' => 'Name Surname',
@@ -33,4 +35,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($user->isAuthenticated());
     }
+
+    /* public function test */
 }
