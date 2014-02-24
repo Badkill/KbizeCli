@@ -5,12 +5,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use KbizeCli\Kernel;
+use KbizeCli\Application;
+use KbizeCli\Console\Command\BaseCommand;
 
 /**
  * Just a Test command...
  */
-class TestCommand extends Command
+class TestCommand extends BaseCommand
 {
     protected function configure()
     {
@@ -29,8 +30,13 @@ class TestCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //FIXME:!!! should be done in baseCommand in some automatic way....
+        $this->output = $output;
+
         $output->writeln('start');
-        $this->kernel = new Kernel($input->getOption('env'));
-        $this->kernel->login('danilo.silva@neomobile.com', 'asdRTYjkl123');
+        $this->kbize = new Application($input->getOption('env'), $this, $output);
+        $res = $this->kbize->getProjectsAndBoards();
+        var_export($res);
+        /* $this->kbize->login('danilo.silva@neomobile.com', ''); */
     }
 }

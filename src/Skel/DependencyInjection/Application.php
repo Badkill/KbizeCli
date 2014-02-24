@@ -6,7 +6,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use KbizeCli\Kernel;
+use KbizeCli\Application as KbizeCliApplication;
 
 class Application extends \Symfony\Component\Console\Application
 {
@@ -14,11 +14,6 @@ class Application extends \Symfony\Component\Console\Application
      * @var ContainerBuilder
      */
     protected $container;
-
-    /**
-     * @var KbizeCli\Gateway
-     */
-    protected $gateway;
 
     public function getContainer()
     {
@@ -52,9 +47,6 @@ class Application extends \Symfony\Component\Console\Application
         $version = $this->container->getParameter('version');
         parent::__construct($app['name'], $version['current']);
 
-        $this->kernel = new Kernel('prod');
-        /* $this->gateway = Gateway::init($this->container); */
-
         // and add commands to it
         $this->addConsoleCommands($baseNamespaceName);
 
@@ -85,7 +77,7 @@ class Application extends \Symfony\Component\Console\Application
                             $className = $file->getBasename('.php'); // strip .php extension
                             $r = new \ReflectionClass($baseNamespaceName . '\Console\Command' . '\\' . $className);
                             if (!$r->isAbstract()) {
-                                $this->add($r->newInstance($this->gateway));
+                                $this->add($r->newInstance());
                             }
                         }
                     }

@@ -12,3 +12,7 @@ services:
   gateway:
     class: KbizeCli\Gateway
     arguments: ["@sdk"]
+
+  kbize:
+    class: KbizeCli\Gateway
+    arguments: ["@sdk"]
