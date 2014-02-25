@@ -8,7 +8,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->sdk = $this->getMock('KbizeCli\Sdk\SdkInterface');
-        $this->user = $this->getMock('KbizeCli\User');
+        $this->user = $this->getMock('KbizeCli\UserInterface');
         $this->gw = new Gateway($this->sdk, $this->user);
     }
 
@@ -37,7 +37,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->user));
 
         $user = $this->gw->login($email, $password);
-        $this->assertInstanceOf('KbizeCli\User', $user);
+        $this->assertInstanceOf('KbizeCli\UserInterface', $user);
     }
 
     /* /** */

@@ -11,7 +11,7 @@ class Gateway implements KbizeInterface
     private $user;
     private $apikey;
 
-    public function __construct(ApiInterface $sdk, User $user, $apikey = "")
+    public function __construct(ApiInterface $sdk, UserInterface $user, $apikey = "")
     {
         $this->sdk = $sdk;
         $this->user = $user;

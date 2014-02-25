@@ -1,20 +1,43 @@
 <?php
 namespace KbizeCli;
+use KbizeCli\Cache;
 
-class User
+class User implements UserInterface
 {
     private $data;
+    private $cache;
 
-    public function __construct()
+    public static function fromCache(Cache $cache)
     {
+        $user = new static($cache);
+        $data = $cache->read();
+
+        if ($data) {
+            $user->setData($data);
+        }
+
+        return $user;
+    }
+
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+        $this->data = [];
     }
 
     public function update(array $data)
     {
-        $newUser = new static();
+        $newUser = new static($this->cache);
         $newUser->setData($data);
 
         return $newUser;
+    }
+
+    public function store()
+    {
+        $this->cache->write($this->data);
+
+        return $this;
     }
 
     public function isAuthenticated()

@@ -9,7 +9,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->user = $this->getMock('KbizeCli\User');
+        $this->user = $this->getMock('KbizeCli\UserInterface');
     }
 
     /**
