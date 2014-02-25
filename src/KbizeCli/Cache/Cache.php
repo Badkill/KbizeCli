@@ -1,5 +1,5 @@
 <?php
-namespace KbizeCli;
+namespace KbizeCli\Cache;
 
 interface Cache
 {
