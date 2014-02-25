@@ -15,4 +15,21 @@ services:
 
   kbize:
     class: KbizeCli\Gateway
-    arguments: ["@sdk"]
+    arguments: ["@sdk", "@user"]
+
+  user:
+    class: KbizeCli\User
+    factory_class: KbizeCli\User
+    factory_method: fromCache
+    arguments: ["@yamlCache"]
+
+  yamlCache:
+    class: KbizeCli\Cache\YamlCache
+    arguments: ['data/env/user.yml', '@yamlParser', '@yamlDumper']
+
+  yamlParser:
+    class: Symfony\Component\Yaml\Parser
+    arguments: [2]
+
+  yamlDumper:
+    class: Symfony\Component\Yaml\Dumper
