@@ -1,5 +1,6 @@
 <?php
 namespace KbizeCli;
+use KbizeCli\Cache\Cache;
 
 interface UserInterface
 {

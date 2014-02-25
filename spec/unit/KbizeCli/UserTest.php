@@ -1,12 +1,12 @@
 <?php
 namespace KbizeCli;
-use KbizeCli\Cache;
+use KbizeCli\Cache\Cache;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->cache = $this->getMock('KbizeCli\Cache');
+        $this->cache = $this->getMock('KbizeCli\Cache\Cache');
     }
 
     public function testUserIsInitializedWithDataFromCache()

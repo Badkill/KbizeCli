@@ -1,6 +1,6 @@
 <?php
 namespace KbizeCli;
-use KbizeCli\Cache;
+use KbizeCli\Cache\Cache;
 
 class User implements UserInterface
 {
@@ -25,10 +25,14 @@ class User implements UserInterface
         $this->data = [];
     }
 
-    public function update(array $data)
+    public function update(array $data, $store = false)
     {
         $newUser = new static($this->cache);
         $newUser->setData($data);
+
+        if ($store) {
+            $newUser->store();
+        }
 
         return $newUser;
     }

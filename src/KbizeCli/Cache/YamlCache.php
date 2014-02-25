@@ -20,7 +20,6 @@ class YamlCache implements Cache
     public function read()
     {
         if (!file_exists($this->path)) {
-            echo "uu";exit;
             return [];
         }
 
