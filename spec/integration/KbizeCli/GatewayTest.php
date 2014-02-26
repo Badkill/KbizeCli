@@ -4,6 +4,7 @@ namespace KbizeCli\Tests\Integration;
 use KbizeCli\Gateway;
 use KbizeCli\Sdk\Sdk;
 use KbizeCli\Http\Client;
+use KbizeCli\Cache\Cache;
 
 class GatewayTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,18 +14,29 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException KbizeCli\Sdk\Exception\ForbiddenException
      */
     public function testCallAnApiWhichRequiresAuthenticationWithoutApikeyTriggersAnException()
     {
-        $this->markTestSkipped();
+        $this->user->expects($this->once())
+            ->method('isAuthenticated')
+            ->will($this->returnValue(false));
+
         $this->gw = new Gateway($this->sdk(), $this->user);
         $this->gw->getProjectsAndBoards();
     }
 
     public function testCallAnApiWhichRequiresAuthenticationWithApikeyWorksRight()
     {
-        $this->gw = new Gateway($this->sdk(), $this->user, 'secret-api-key');
+        $this->user->expects($this->once())
+            ->method('isAuthenticated')
+            ->will($this->returnValue(true));
+
+        $this->user->expects($this->once())
+            ->method('apikey')
+            ->will($this->returnValue('secret-api-key'));
+
+        $this->gw = new Gateway($this->sdk(), $this->user);
         $this->gw->getProjectsAndBoards();
     }
 

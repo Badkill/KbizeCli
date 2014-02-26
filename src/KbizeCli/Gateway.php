@@ -11,20 +11,20 @@ class Gateway implements KbizeInterface
     private $user;
     private $apikey;
 
-    public function __construct(ApiInterface $sdk, UserInterface $user, $apikey = "")
+    public function __construct(ApiInterface $sdk, UserInterface $user)
     {
         $this->sdk = $sdk;
         $this->user = $user;
-        $this->apikey = $apikey;
-        if ($this->apikey) {
-            $this->sdk->setApikey($this->apikey);
+
+        if ($this->user->isAuthenticated()) {
+            $this->sdk->setApikey($this->user->apikey());
         }
     }
 
     public function login($email, $password)
     {
         $userData = $this->sdk->login($email, $password);
-        $this->user = $this->user->update($userData);
+        $this->user = $this->user->update($userData, true);
         $this->sdk->setApikey($this->user->apikey());
 
         return $this->user;
