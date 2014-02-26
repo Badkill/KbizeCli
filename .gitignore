@@ -4,3 +4,4 @@ cache/*
 /build/*
 composer.lock
 .buildpath
+/data/*
