@@ -7,6 +7,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->cache = $this->getMock('KbizeCli\Cache\Cache');
+        $this->cachePath = 'cache/path';
     }
 
     public function testUserIsInitializedWithDataFromCache()
@@ -21,7 +22,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->cacheReadReturns($data);
 
-        $user = User::fromCache($this->cache);
+        $user = User::fromCache($this->cache, $this->cachePath);
 
         $this->assertEquals($data, $user->toArray());
     }
@@ -30,7 +31,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->cacheReadReturns([]);
 
-        $user = User::fromCache($this->cache);
+        $user = User::fromCache($this->cache, $this->cachePath);
 
         $this->assertEquals([], $user->toArray());
     }
@@ -47,7 +48,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->cacheReadReturns($data);
 
-        $user = User::fromCache($this->cache);
+        $user = User::fromCache($this->cache, $this->cachePath);
 
         $this->assertFalse($user->isAuthenticated());
     }
@@ -55,7 +56,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testUserWithApikeyIsAuthenticated()
     {
         $this->cacheReadReturns([]);
-        $user = User::fromCache($this->cache);
+        $user = User::fromCache($this->cache, $this->cachePath);
         $user = $user->update([
             'email' => 'name@company.com',
             'username' => 'name.surname',
@@ -80,7 +81,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->cacheReadReturns([]);
-        $user = User::fromCache($this->cache);
+        $user = User::fromCache($this->cache, $this->cachePath);
         $user = $user->update($data);
 
         $this->cache->expects($this->once())

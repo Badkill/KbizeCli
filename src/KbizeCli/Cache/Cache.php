@@ -7,7 +7,7 @@ interface Cache
      * Read data from cache storage
      * @return array
      */
-    public function read();
+    public function read($path);
 
     /**
      * Write data onto cache storage
@@ -15,5 +15,5 @@ interface Cache
      * @params array $data
      * @return self
      */
-    public function write(array $data = [], $level = 2);
+    public function write($path, array $data = [], $level = 2);
 }

@@ -4,7 +4,7 @@ use KbizeCli\Cache\Cache;
 
 interface UserInterface
 {
-    public static function fromCache(Cache $cache);
+    public static function fromCache(Cache $cache, $cachePath);
 
     /**
      * Create new User object and set data on it

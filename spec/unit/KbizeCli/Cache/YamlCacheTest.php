@@ -16,7 +16,7 @@ class YamlCacheTest extends \PHPUnit_Framework_TestCase
         $this->file = vfsStream::url($this->basePath . $this->configFilePath);
         $this->parser = $this->getMock('Symfony\Component\Yaml\Parser');
         $this->dumper = $this->getMock('Symfony\Component\Yaml\Dumper');
-        $this->cache = new YamlCache($this->file, $this->parser, $this->dumper);
+        $this->cache = new YamlCache($this->parser, $this->dumper);
     }
 
     public function testWrite()
@@ -30,14 +30,14 @@ class YamlCacheTest extends \PHPUnit_Framework_TestCase
             ->with($data);
 
         $this->assertFalse($this->root->hasChild($this->configFilePath));
-        $this->cache->write($data, 2);
+        $this->cache->write($this->file, $data, 2);
         $this->assertTrue($this->root->hasChild($this->configFilePath));
     }
 
     public function testReadNotExistingFileReturnsEmptyArray()
     {
         $this->assertFalse($this->root->hasChild($this->configFilePath));
-        $this->assertEquals([], $this->cache->read());
+        $this->assertEquals([], $this->cache->read($this->file));
     }
 
     public function testReadWithExistingFile()
@@ -56,6 +56,6 @@ class YamlCacheTest extends \PHPUnit_Framework_TestCase
             ->with('foo: bar')
             ->will($this->returnValue($data));
 
-        $this->assertEquals($data, $this->cache->read());
+        $this->assertEquals($data, $this->cache->read($this->file));
     }
 }

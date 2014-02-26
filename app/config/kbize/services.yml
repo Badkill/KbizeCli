@@ -1,6 +1,3 @@
-parameters:
-  cache.yaml: 'KbizeCli\Cache\YamlCache'
-
 services:
   httpClient:
     class: KbizeCli\Http\Client
@@ -24,7 +21,7 @@ services:
     class: KbizeCli\User
     factory_class: KbizeCli\User
     factory_method: fromCache
-    arguments: ["@userCache"]
+    arguments: ["@yamlCache", 'data/env']
 
   yamlParser:
     class: Symfony\Component\Yaml\Parser
@@ -33,6 +30,6 @@ services:
   yamlDumper:
     class: Symfony\Component\Yaml\Dumper
 
-  userCache:
-    class: '%cache.yaml%'
+  yamlCache:
+    class: KbizeCli\Cache\YamlCache
     arguments: ['data/env/user.yml', '@yamlParser', '@yamlDumper']
