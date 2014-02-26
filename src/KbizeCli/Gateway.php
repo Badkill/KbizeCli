@@ -4,6 +4,7 @@ namespace KbizeCli;
 use KbizeCli\Sdk\ApiInterface;
 use KbizeCli\Sdk\Sdk;
 use KbizeCli\Sdk\Exception\ForbiddenException;
+use KbizeCli\Cache\Cache;
 
 class Gateway implements KbizeInterface
 {
@@ -11,7 +12,7 @@ class Gateway implements KbizeInterface
     private $user;
     private $apikey;
 
-    public function __construct(ApiInterface $sdk, UserInterface $user)
+    public function __construct(ApiInterface $sdk, UserInterface $user, Cache $cache, $cachePath)
     {
         $this->sdk = $sdk;
         $this->user = $user;
@@ -33,6 +34,11 @@ class Gateway implements KbizeInterface
     public function getProjectsAndBoards()
     {
         return $this->callSdk('getProjectsAndBoards');
+    }
+
+    public function getAllTasks($boardId)
+    {
+        return $this->callSdk('getAllTasks', [$boardId]);
     }
 
     public function callSdk($method, array $args = [])

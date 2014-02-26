@@ -1,3 +1,6 @@
+parameters:
+    path.data: 'data/env'
+
 services:
   httpClient:
     class: KbizeCli\Http\Client
@@ -9,19 +12,15 @@ services:
     class: KbizeCli\Sdk\Sdk
     arguments: ["@httpClient"]
 
-  gateway:
-    class: KbizeCli\Gateway
-    arguments: ["@sdk"]
-
   kbize:
     class: KbizeCli\Gateway
-    arguments: ["@sdk", "@user"]
+    arguments: ["@sdk", "@user", "@yamlCache", '%path.data%']
 
   user:
     class: KbizeCli\User
     factory_class: KbizeCli\User
     factory_method: fromCache
-    arguments: ["@yamlCache", 'data/env']
+    arguments: ["@yamlCache", '%path.data%']
 
   yamlParser:
     class: Symfony\Component\Yaml\Parser
@@ -32,4 +31,4 @@ services:
 
   yamlCache:
     class: KbizeCli\Cache\YamlCache
-    arguments: ['data/env/user.yml', '@yamlParser', '@yamlDumper']
+    arguments: ['@yamlParser', '@yamlDumper']

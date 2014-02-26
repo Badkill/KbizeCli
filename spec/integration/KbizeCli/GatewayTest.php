@@ -11,6 +11,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->user = $this->getMock('KbizeCli\UserInterface');
+        $this->cache = $this->getMock('KbizeCli\Cache\Cache');
     }
 
     /**
@@ -22,11 +23,36 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->method('isAuthenticated')
             ->will($this->returnValue(false));
 
-        $this->gw = new Gateway($this->sdk(), $this->user);
+        $this->gw = $this->gw();
         $this->gw->getProjectsAndBoards();
     }
 
     public function testCallAnApiWhichRequiresAuthenticationWithApikeyWorksRight()
+    {
+        $this->userIsAuthenticated();
+        $this->gw = $this->gw();
+
+        $this->gw->getProjectsAndBoards();
+    }
+
+    public function testGetAllTasksCacheDataCorrectly()
+    {
+        $boardId = 42;
+
+        $this->userIsAuthenticated();
+
+        $this->gw = $this->gw();
+        $this->gw->getAllTasks($boardId);
+    }
+
+    private function sdk()
+    {
+        return new Sdk(Client::fromConfig([
+            'baseUrl' => 'http://localhost:8000',
+        ]));
+    }
+
+    private function userIsAuthenticated()
     {
         $this->user->expects($this->once())
             ->method('isAuthenticated')
@@ -35,15 +61,10 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->user->expects($this->once())
             ->method('apikey')
             ->will($this->returnValue('secret-api-key'));
-
-        $this->gw = new Gateway($this->sdk(), $this->user);
-        $this->gw->getProjectsAndBoards();
     }
 
-    private function sdk()
+    private function gw()
     {
-        return new Sdk(Client::fromConfig([
-            'baseUrl' => 'http://localhost:8000',
-        ]));
+        return new Gateway($this->sdk(), $this->user, $this->cache, 'cache/path');
     }
 }

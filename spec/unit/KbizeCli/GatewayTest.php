@@ -9,7 +9,8 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     {
         $this->sdk = $this->getMock('KbizeCli\Sdk\SdkInterface');
         $this->user = $this->getMock('KbizeCli\UserInterface');
-        $this->gw = new Gateway($this->sdk, $this->user);
+        $this->cache = $this->getMock('KbizeCli\Cache\Cache');
+        $this->gw = new Gateway($this->sdk, $this->user, $this->cache, 'cache/path');
     }
 
     public function testLoginReturnsAnUpdatedUserInstance()
