@@ -15,5 +15,5 @@ interface Cache
      * @params array $data
      * @return self
      */
-    public function write(array $data = []);
+    public function write(array $data = [], $level = 2);
 }

@@ -26,10 +26,10 @@ class YamlCache implements Cache
         return $this->parser->parse(file_get_contents($this->path));
     }
 
-    public function write(array $data = [])
+    public function write(array $data = [], $level = 2)
     {
-        $this->fsSetup();
-        file_put_contents($this->path, $this->dumper->dump($data, 2));
+        $this->fsSetup($this->path);
+        file_put_contents($this->path, $this->dumper->dump($data, $level));
     }
 
     private function fsSetup()

@@ -53,7 +53,7 @@ class YamlCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->parser->expects($this->once())
             ->method('parse')
-            ->with(file_get_contents($this->file))
+            ->with('foo: bar')
             ->will($this->returnValue($data));
 
         $this->assertEquals($data, $this->cache->read());
