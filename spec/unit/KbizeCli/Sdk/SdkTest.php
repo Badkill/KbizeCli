@@ -126,6 +126,27 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $sdk->getProjectsAndBoards();
     }
 
+    public function testGetAllTasks()
+    {
+        $boardId = 42;
+        $data = [
+            'foo' => 'bar'
+        ];
+
+        $this->requestReturnsJson($data);
+
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('get_all_tasks', [
+                'Content-Type' => 'application/json'
+            ], json_encode(['boardid' => $boardId]))
+            ->will($this->returnValue($this->request));
+
+        $sdk = new Sdk($this->client);
+        $sdk->setApikey($this->apikey);
+        $this->assertEquals($data, $sdk->getAllTasks($boardId));
+    }
+
     private function clientExpectation($url, $data)
     {
         $this->client->expects($this->once())

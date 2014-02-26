@@ -74,7 +74,10 @@ class Sdk implements SdkInterface
 
     public function getAllTasks($boardId, array $parameters = array())
     {
-
+        $request = $this->post('get_all_tasks', [
+            'boardid' => $boardId,
+        ]);
+        return $this->send($request);
     }
 
     public function addComment($taskId, $comment)
