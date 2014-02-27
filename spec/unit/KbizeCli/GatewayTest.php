@@ -10,7 +10,8 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->sdk = $this->getMock('KbizeCli\Sdk\SdkInterface');
         $this->user = $this->getMock('KbizeCli\UserInterface');
         $this->cache = $this->getMock('KbizeCli\Cache\Cache');
-        $this->gw = new Gateway($this->sdk, $this->user, $this->cache, 'cache/path');
+        $this->cachePath = 'cache/path';
+        $this->gw = new Gateway($this->sdk, $this->user, $this->cache, $this->cachePath);
     }
 
     public function testLoginReturnsAnUpdatedUserInstance()
@@ -40,6 +41,48 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $user = $this->gw->login($email, $password);
         $this->assertInstanceOf('KbizeCli\UserInterface', $user);
     }
+
+    public function testGetAllTasksAndWriteOnCacheIfCacheIsEmpty()
+    {
+        $boardId = 42;
+        $this->cacheFile = $this->cachePath . DIRECTORY_SEPARATOR . $boardId . DIRECTORY_SEPARATOR . 'tasks.yml';
+        $data = [
+            'foo' => 'bar',
+        ];
+
+        $this->sdk->expects($this->once())
+            ->method('getAllTasks')
+            ->with($boardId)
+            ->will($this->returnValue($data));
+
+        $this->cache->expects($this->once())
+            ->method('read')
+            ->with($this->cacheFile)
+            ->will($this->returnValue([]));
+
+        $this->cache->expects($this->once())
+            ->method('write')
+            ->with($this->cacheFile, $data);
+
+        $this->assertEquals($data, $this->gw->getAllTasks($boardId));
+    }
+
+    public function testGetAllTasksReturnsCachedDataIfFull()
+    {
+        $boardId = 42;
+        $this->cacheFile = $this->cachePath . DIRECTORY_SEPARATOR . $boardId . DIRECTORY_SEPARATOR . 'tasks.yml';
+        $cachedData = [
+            'foo' => 'bar',
+        ];
+
+        $this->cache->expects($this->once())
+            ->method('read')
+            ->with($this->cacheFile)
+            ->will($this->returnValue($cachedData));
+
+        $this->assertEquals($cachedData, $this->gw->getAllTasks($boardId));
+    }
+
 
     /* /** */
     /*  * @expectedException KbizeCli\Sdk\Exception\ForbiddenException */

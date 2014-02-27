@@ -16,6 +16,8 @@ class Gateway implements KbizeInterface
     {
         $this->sdk = $sdk;
         $this->user = $user;
+        $this->cache = $cache;
+        $this->cachePath = $cachePath;
 
         if ($this->user->isAuthenticated()) {
             $this->sdk->setApikey($this->user->apikey());
@@ -38,11 +40,29 @@ class Gateway implements KbizeInterface
 
     public function getAllTasks($boardId)
     {
-        return $this->callSdk('getAllTasks', [$boardId]);
+        $cacheFile = $boardId . DIRECTORY_SEPARATOR . 'tasks.yml';
+        $tasks = $this->fromCache($cacheFile);
+
+        if (!$tasks) {
+            $tasks = $this->callSdk('getAllTasks', [$boardId]);
+            $this->cache($cacheFile, $tasks);
+        }
+
+        return $tasks;
     }
 
     public function callSdk($method, array $args = [])
     {
         return call_user_func_array([$this->sdk, $method], $args);
+    }
+
+    private function cache($file, array $data)
+    {
+        $this->cache->write($this->cachePath . DIRECTORY_SEPARATOR . $file, $data);
+    }
+
+    private function fromCache($file)
+    {
+        return $this->cache->read($this->cachePath . DIRECTORY_SEPARATOR . $file);
     }
 }

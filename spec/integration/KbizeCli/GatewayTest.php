@@ -35,16 +35,6 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->gw->getProjectsAndBoards();
     }
 
-    public function testGetAllTasksCacheDataCorrectly()
-    {
-        $boardId = 42;
-
-        $this->userIsAuthenticated();
-
-        $this->gw = $this->gw();
-        $this->gw->getAllTasks($boardId);
-    }
-
     private function sdk()
     {
         return new Sdk(Client::fromConfig([
