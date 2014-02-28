@@ -20,9 +20,9 @@ class TaskCollection
         $collectedTasks = [];
 
         if ($useAnd) {
-            $strategy = new AndMatcher();
+            $strategy = new AndMatcherStrategy();
         } else {
-            $strategy = new OrMatcher();
+            $strategy = new OrMatcherStrategy();
         }
 
         foreach ($this->tasks as $task) {
@@ -35,7 +35,7 @@ class TaskCollection
     }
 }
 
-class AndMatcher extends Matcher
+class AndMatcherStrategy extends MatcherStrategy
 {
     public function match($collection, $filters)
     {
@@ -49,7 +49,7 @@ class AndMatcher extends Matcher
     }
 }
 
-class OrMatcher extends Matcher
+class OrMatcherStrategy extends MatcherStrategy
 {
     public function match($collection, $filters)
     {
@@ -63,7 +63,7 @@ class OrMatcher extends Matcher
     }
 }
 
-abstract class Matcher
+abstract class MatcherStrategy
 {
     abstract function match($collection, $filters);
 
