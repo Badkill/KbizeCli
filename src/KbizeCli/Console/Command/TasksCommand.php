@@ -48,12 +48,47 @@ class TasksCommand extends BaseCommand
         $this->output = $output;
 
         $this->kbize = new Application($input->getOption('env'), $this, $output);
+
+        $container = $this->kbize->getContainer();
+
+        $displayedFields = $this->displayedFields($container);
+
         $taskCollection = new TaskCollection(
             $this->kbize->getAllTasks($input->getOption('board'))
         );
 
-        $filters = $input->getArgument('filters');
+        $table = $this->getHelperSet()->get('table')
+            ->setLayout(TableHelper::LAYOUT_BORDERLESS)
+            ->setCellRowContentFormat('%s ');
+            /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
+            /* ->setBorderFormat(' ') */
+            /* ->setCellHeaderFormat('<options=underscore>%s</options=underscore>'); */
 
+        $table
+            ->setHeaders($this->headers($displayedFields))
+            ->setRows($this->rows(
+                $taskCollection,
+                $input->getArgument('filters'),
+                $displayedFields
+            ));
+
+        $table->render($output);
+    }
+
+    private function headers(array $displayedFields)
+    {
+        $headers = [];
+        foreach ($displayedFields as $field) {
+            $headers[] = ucfirst($this->adjustNameField($field, [
+                'taskid' => 'ID',
+            ]));
+        }
+
+        return $headers;
+    }
+
+    private function rows($taskCollection, $filters, $displayedFields)
+    {
         $rows = [];
 
         $colors = ["", "magenta"];
@@ -61,28 +96,16 @@ class TasksCommand extends BaseCommand
         foreach ($taskCollection->filter($filters) as $task) {
 
             $color = $colors[$alternate++%2];
-            $rows[] = [
-                $this->color($task['taskid'], $color),
-                $this->color($task['assignee'], $color),
-                $this->color($task['priority'], $color),
-                $this->color($task['lanename'], $color),
-                $this->color($task['columnname'], $color),
-                $this->color($task['title'], $color),
-            ];
+
+            $row = [];
+            foreach ($displayedFields as $field) {
+                $row[] = $this->color($task[$field], $color);
+            }
+
+            $rows[] = $row;
         }
 
-        $table = $this->getHelperSet()->get('table')
-            ->setLayout(TableHelper::LAYOUT_BORDERLESS)
-            /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
-            ->setCellRowContentFormat('%s ');
-            /* ->setBorderFormat(' ') */
-            /* ->setCellHeaderFormat('<options=underscore>%s</options=underscore>'); */
-
-        $table
-            ->setHeaders(array('ID', 'Assignee', 'Priority', 'LaneName', 'ColumnName', 'Title'))
-            ->setRows($rows);
-
-        $table->render($output);
+        return $rows;
     }
 
     private function color($string, $color = "")
@@ -92,5 +115,20 @@ class TasksCommand extends BaseCommand
         }
 
         return $string;
+    }
+
+    private function adjustNameField($field, array $fixes = [])
+    {
+        if (array_key_exists($field, $fixes)) {
+            return $fixes[$field];
+        }
+
+        return $field;
+    }
+
+    private function displayedFields($container)
+    {
+        $displaySettings = $container->getParameter('display');
+        return $displaySettings['tasks.longlist'];
     }
 }

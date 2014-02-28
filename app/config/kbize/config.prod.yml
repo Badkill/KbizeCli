@@ -5,3 +5,13 @@ parameters:
   api:
     baseUrl: http://kanbanize.com/index.php/api/kanbanize
 
+
+  display:
+    tasks.longlist:
+      - taskid
+      - assignee
+      - priority
+      - lanename
+      - columnname
+      - title
+

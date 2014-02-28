@@ -44,6 +44,11 @@ class Application
         });
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     private function retryOnForbiddenException(callable $call)
     {
         while (true) {
