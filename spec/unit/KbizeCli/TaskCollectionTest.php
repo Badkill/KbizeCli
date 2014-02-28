@@ -88,6 +88,60 @@ class TaskCollectionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testFilterCollectionOnSubArray()
+    {
+        $t1 = [
+            'child' => [
+                'title' => 'foo',
+                'description' => 'bar',
+            ]
+        ];
+
+        $t2 = [
+            'child' => [
+                'title' => 'baz',
+                'description' => 'qux',
+            ]
+        ];
+
+        $tasks = [$t1, $t2];
+
+        $taskCollection = new TaskCollection($tasks);
+
+        $this->assertEquals(
+            [$t1],
+            $taskCollection->filter(['foo'])
+        );
+    }
+
+    public function testFilterCollectionOnSubArrayWithSpecificKey()
+    {
+        $this->markTestIncomplete();
+
+        $t1 = [
+            'child' => [
+                'title' => 'foo',
+                'description' => 'bar',
+            ]
+        ];
+
+        $t2 = [
+            'child' => [
+                'title' => 'baz',
+                'description' => 'qux',
+            ]
+        ];
+
+        $tasks = [$t1, $t2];
+
+        $taskCollection = new TaskCollection($tasks);
+
+        $this->assertEquals(
+            [$t1],
+            $taskCollection->filter(['child.title=foo'])
+        );
+    }
+
     private function sampleTasks()
     {
         return [

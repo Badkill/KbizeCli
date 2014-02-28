@@ -77,7 +77,11 @@ abstract class Matcher
             }
 
             if (is_array($fieldValue)) {
-                continue; //FIXME:!
+                if ($this->collectionMatch($fieldValue, $filter)) {
+                    return true;
+                }
+
+                continue;
             }
 
             if (is_object($fieldValue)) {
