@@ -63,6 +63,8 @@ class TasksCommand extends BaseCommand
             array_pop($filters);
             foreach ($taskCollection->filter($filters) as $task) {
                 $this->showTask($task, $output);
+                $output->writeln('');
+                $output->writeln('');
             }
 
             return;
@@ -148,7 +150,7 @@ class TasksCommand extends BaseCommand
             $rows[] = [$field, $value];
         }
 
-        $table = $this->getHelperSet()->get('table')
+        $table = $this->getHelperSet()->get('alternate-table')
             ->setLayout(TableHelper::LAYOUT_BORDERLESS)
             ->setCellRowContentFormat('%s ');
             /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
