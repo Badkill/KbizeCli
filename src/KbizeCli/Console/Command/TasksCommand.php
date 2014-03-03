@@ -47,6 +47,8 @@ class TasksCommand extends BaseCommand
         //FIXME:!!! should be done in baseCommand in some automatic way....
         $this->output = $output;
 
+        $filters = $input->getArgument('filters');
+
         $this->kbize = new Application($input->getOption('env'), $this, $output);
 
         $container = $this->kbize->getContainer();
@@ -57,18 +59,26 @@ class TasksCommand extends BaseCommand
             $this->kbize->getAllTasks($input->getOption('board'))
         );
 
-        $table = $this->getHelperSet()->get('table')
+        if (end($filters) == "show") {
+            array_pop($filters);
+            foreach ($taskCollection->filter($filters) as $task) {
+                $this->showTask($task, $output);
+            }
+
+            return;
+        }
+
+
+        $table = $this->getHelperSet()->get('alternate-table')
             ->setLayout(TableHelper::LAYOUT_BORDERLESS)
-            ->setCellRowContentFormat('%s ');
-            /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
-            /* ->setBorderFormat(' ') */
-            /* ->setCellHeaderFormat('<options=underscore>%s</options=underscore>'); */
+            ->setCellRowContentFormat('%s ')
+            ;
 
         $table
             ->setHeaders($this->headers($displayedFields))
             ->setRows($this->rows(
                 $taskCollection,
-                $input->getArgument('filters'),
+                $filters,
                 $displayedFields
             ));
 
@@ -91,15 +101,11 @@ class TasksCommand extends BaseCommand
     {
         $rows = [];
 
-        $colors = ["", "magenta"];
-        $alternate = 0;
         foreach ($taskCollection->filter($filters) as $task) {
-
-            $color = $colors[$alternate++%2];
 
             $row = [];
             foreach ($displayedFields as $field) {
-                $row[] = $this->color($task[$field], $color);
+                $row[] = $task[$field];
             }
 
             $rows[] = $row;
@@ -130,5 +136,29 @@ class TasksCommand extends BaseCommand
     {
         $displaySettings = $container->getParameter('display');
         return $displaySettings['tasks.longlist'];
+    }
+
+    private function showTask($task, $output)
+    {
+        $rows = [];
+        foreach ($task as $field => $value) {
+            if (is_array($value)) {
+                continue;
+            }
+            $rows[] = [$field, $value];
+        }
+
+        $table = $this->getHelperSet()->get('table')
+            ->setLayout(TableHelper::LAYOUT_BORDERLESS)
+            ->setCellRowContentFormat('%s ');
+            /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
+            /* ->setBorderFormat(' ') */
+            /* ->setCellHeaderFormat('<options=underscore>%s</options=underscore>'); */
+
+        $table
+            ->setHeaders(['Name', 'Value'])
+            ->setRows($rows);
+
+        $table->render($output);
     }
 }
