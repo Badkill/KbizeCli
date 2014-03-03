@@ -348,8 +348,10 @@ class AlternateTableHelper extends Helper
         if (!empty($this->headers)) {
             $this->renderRowSeparator();
         }
+        $colors = [false, "\e[48;5;16m"];
+        $alternate = 0;
         foreach ($this->rows as $row) {
-            $this->renderRow($row, $this->cellRowFormat);
+            $this->renderRow($row, $this->cellRowFormat, $colors[$alternate++%2]);
         }
         if (!empty($this->rows)) {
             $this->renderRowSeparator();
@@ -397,16 +399,14 @@ class AlternateTableHelper extends Helper
      * @param array  $row
      * @param string $cellFormat
      */
-    private function renderRow(array $row, $cellFormat)
+    private function renderRow(array $row, $cellFormat, $color = false)
     {
         if (empty($row)) {
             return;
         }
 
-        static $alternate;
-
-        if ($alternate%2) {
-            $this->output->write("\e[48;5;16m");
+        if ($color) {
+            $this->output->write($color);
         }
 
         $this->renderColumnSeparator();
@@ -415,7 +415,7 @@ class AlternateTableHelper extends Helper
             $this->renderColumnSeparator();
         }
 
-        if ($alternate++ % 2) {
+        if ($color) {
             $this->output->writeln("\e[0m");
         } else {
             $this->output->writeln('');
