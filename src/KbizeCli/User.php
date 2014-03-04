@@ -6,12 +6,14 @@ class User implements UserInterface
 {
     private $data;
     private $cache;
+    private $cacheFilePath;
     const cacheFilename = 'user.yml';
 
     public static function fromCache(Cache $cache, $cachePath)
     {
-        $user = new static($cache);
-        $data = $cache->read($cachePath . DIRECTORY_SEPARATOR . self::cacheFilename);
+        $cacheFilePath = $cachePath . DIRECTORY_SEPARATOR . self::cacheFilename;
+        $user = new static($cache, $cacheFilePath);
+        $data = $cache->read($cacheFilePath);
 
         if ($data) {
             $user->setData($data);
@@ -20,15 +22,16 @@ class User implements UserInterface
         return $user;
     }
 
-    public function __construct(Cache $cache)
+    public function __construct(Cache $cache, $cacheFilePath)
     {
-        $this->cache = $cache;
+      $this->cache = $cache;
+      $this->cacheFilePath = $cacheFilePath;
         $this->data = [];
     }
 
     public function update(array $data, $store = false)
     {
-        $newUser = new static($this->cache);
+        $newUser = new static($this->cache, $this->cacheFilePath);
         $newUser->setData($data);
 
         if ($store) {
@@ -40,7 +43,7 @@ class User implements UserInterface
 
     public function store()
     {
-        $this->cache->write($this->data);
+        $this->cache->write($this->cacheFilePath, $this->data);
 
         return $this;
     }
