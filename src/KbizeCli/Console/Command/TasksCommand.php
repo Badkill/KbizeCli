@@ -32,28 +32,33 @@ class TasksCommand extends BaseCommand
                 'board',
                 'b',
                 InputOption::VALUE_REQUIRED,
-                'The ID of the board whose structure you want to get.',
-                ''
+                'The ID of the board whose structure you want to get.'
+            )
+            ->addOption(
+                'short',
+                '',
+                InputOption::VALUE_NONE,
+                'Display a minimal subset of information'
             )
             ->addArgument(
                 'filters',
                 InputArgument::IS_ARRAY,
                 ''
             );
+
+        $this->setRequiredOptions([
+            'board' => 'Please enter the board id: ',
+        ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //FIXME:!!! should be done in baseCommand in some automatic way....
-        $this->output = $output;
-
         $filters = $input->getArgument('filters');
 
         $this->kbize = new Application($input->getOption('env'), $this, $output);
-
         $container = $this->kbize->getContainer();
 
-        $displayedFields = $this->displayedFields($container);
+        $fieldsToDisplay = $this->fieldsToDisplay($container, $input->getOption('short', false));
 
         $taskCollection = new TaskCollection(
             $this->kbize->getAllTasks($input->getOption('board'))
@@ -77,20 +82,20 @@ class TasksCommand extends BaseCommand
             ;
 
         $table
-            ->setHeaders($this->headers($displayedFields))
+            ->setHeaders($this->headers($fieldsToDisplay))
             ->setRows($this->rows(
                 $taskCollection,
                 $filters,
-                $displayedFields
+                $fieldsToDisplay
             ));
 
         $table->render($output);
     }
 
-    private function headers(array $displayedFields)
+    private function headers(array $fieldsToDisplay)
     {
         $headers = [];
-        foreach ($displayedFields as $field) {
+        foreach ($fieldsToDisplay as $field) {
             $headers[] = ucfirst($this->adjustNameField($field, [
                 'taskid' => 'ID',
             ]));
@@ -99,14 +104,14 @@ class TasksCommand extends BaseCommand
         return $headers;
     }
 
-    private function rows($taskCollection, $filters, $displayedFields)
+    private function rows($taskCollection, $filters, $fieldsToDisplay)
     {
         $rows = [];
 
         foreach ($taskCollection->filter($filters) as $task) {
 
             $row = [];
-            foreach ($displayedFields as $field) {
+            foreach ($fieldsToDisplay as $field) {
                 $row[] = $task[$field];
             }
 
@@ -134,10 +139,10 @@ class TasksCommand extends BaseCommand
         return $field;
     }
 
-    private function displayedFields($container)
+    private function fieldsToDisplay($container, $short = false)
     {
         $displaySettings = $container->getParameter('display');
-        return $displaySettings['tasks.longlist'];
+        return $displaySettings[$short ? 'tasks.shortlist' : 'tasks.longlist'];
     }
 
     private function showTask($task, $output)

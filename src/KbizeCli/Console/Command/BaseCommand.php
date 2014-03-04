@@ -12,6 +12,8 @@ use KbizeCli\Questioner;
  */
 abstract class BaseCommand extends Command implements Questioner
 {
+    protected $requiredOptions;
+
     public function ask($question, $default = '', $hiddenResponse = false)
     {
         $dialog = $this->getHelperSet()->get('dialog');
@@ -32,5 +34,26 @@ abstract class BaseCommand extends Command implements Questioner
     public function getOutput()
     {
         return $this->output;
+    }
+
+    protected function setRequiredOptions(array $required)
+    {
+        $this->requireOptions = $required;
+    }
+
+    protected function askMissingRequiredOptions(InputInterface $input, OutputInterface $output)
+    {
+        foreach ($this->requireOptions as $option => $label) {
+            if (is_null($input->getOption($option, null))) {
+                $input->setOption($option, $this->ask($label));
+            }
+        }
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->input = $input;
+        $this->output = $output;
+        $this->askMissingRequiredOptions($input, $output);
     }
 }
