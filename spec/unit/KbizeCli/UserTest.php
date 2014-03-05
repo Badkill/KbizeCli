@@ -86,7 +86,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->cache->expects($this->once())
             ->method('write')
-            ->with($data)
+            ->with($this->cachePath . '/user.yml', $data)
             ->will($this->returnValue($this));
 
         $user->store();

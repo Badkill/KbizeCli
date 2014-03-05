@@ -2,6 +2,7 @@
 namespace KbizeCli;
 
 use KbizeCli\Sdk\Exception\ForbiddenException;
+use KbizeCli\TaskCollection;
 
 class GatewayTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,7 +65,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->method('write')
             ->with($this->cacheFile, $data);
 
-        $this->assertEquals($data, $this->gw->getAllTasks($boardId));
+        $this->assertEquals(TaskCollection::box($data), $this->gw->getAllTasks($boardId));
     }
 
     public function testGetAllTasksReturnsCachedDataIfFull()
@@ -80,7 +81,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->with($this->cacheFile)
             ->will($this->returnValue($cachedData));
 
-        $this->assertEquals($cachedData, $this->gw->getAllTasks($boardId));
+        $this->assertEquals(TaskCollection::box($cachedData), $this->gw->getAllTasks($boardId));
     }
 
 
