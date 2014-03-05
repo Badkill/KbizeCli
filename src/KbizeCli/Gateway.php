@@ -5,6 +5,7 @@ use KbizeCli\Sdk\ApiInterface;
 use KbizeCli\Sdk\Sdk;
 use KbizeCli\Sdk\Exception\ForbiddenException;
 use KbizeCli\Cache\Cache;
+use KbizeCli\TaskCollection;
 
 class Gateway implements KbizeInterface
 {
@@ -38,17 +39,21 @@ class Gateway implements KbizeInterface
         return $this->callSdk('getProjectsAndBoards');
     }
 
-    public function getAllTasks($boardId)
+    public function getAllTasks($boardId, $useCache = true)
     {
         $cacheFile = $boardId . DIRECTORY_SEPARATOR . 'tasks.yml';
-        $tasks = $this->fromCache($cacheFile);
+        $tasks = [];
+
+        if ($useCache) {
+            $tasks = $this->fromCache($cacheFile);
+        }
 
         if (!$tasks) {
             $tasks = $this->callSdk('getAllTasks', [$boardId]);
             $this->cache($cacheFile, $tasks);
         }
 
-        return $tasks;
+        return TaskCollection::box($tasks);
     }
 
     public function callSdk($method, array $args = [])

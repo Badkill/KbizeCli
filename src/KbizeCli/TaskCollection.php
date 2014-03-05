@@ -5,6 +5,11 @@ class TaskCollection
 {
     private $tasks;
 
+    public static function box(array $tasks = [])
+    {
+        return new static($tasks);
+    }
+
     public function __construct(array $tasks = [])
     {
         $this->tasks = $tasks;
