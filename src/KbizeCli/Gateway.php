@@ -34,9 +34,37 @@ class Gateway implements KbizeInterface
         return $this->user;
     }
 
-    public function getProjectsAndBoards()
+    public function getProjects()
     {
-        return $this->callSdk('getProjectsAndBoards');
+        $projects = [];
+        foreach ($this->getProjectsAndBoards()['projects'] as $project) {
+            $projects[$project['id']] = $project['name'];
+        }
+
+        return $projects;
+    }
+
+    public function getBoards($projectId)
+    {
+        $boards = [];
+        foreach ($this->getProjectsAndBoards()['projects'] as $project) {
+            if ($projectId == $project['id']) {
+                foreach ($project['boards'] as $board) {
+                    $boards[$board['id']] = $board['name'];
+                }
+            }
+        }
+
+        return $board;
+    }
+
+    private function getProjectsAndBoards()
+    {
+        if (!isset($this->projectsAndBoards)) {
+            $this->projectsAndBoards = $this->callSdk('getProjectsAndBoards');
+        }
+
+        return $this->projectsAndBoards;
     }
 
     public function getAllTasks($boardId, $useCache = true)

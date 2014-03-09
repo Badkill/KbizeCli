@@ -5,5 +5,5 @@ interface KbizeInterface
 {
     public function login($email, $password);
 
-    public function getProjectsAndBoards();
+    /* public function getProjectsAndBoards(); */
 }
