@@ -71,7 +71,7 @@ Please insert your Kanbanize email: ');
             '*************************************************************************************
 ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
 *************************************************************************************
-Please insert you password: ',
+Please insert your password: ',
             '',
             true
         );
