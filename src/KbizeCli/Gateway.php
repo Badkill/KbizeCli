@@ -55,7 +55,7 @@ class Gateway implements KbizeInterface
             }
         }
 
-        return $board;
+        return $boards;
     }
 
     private function getProjectsAndBoards()

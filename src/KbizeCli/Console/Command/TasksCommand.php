@@ -29,16 +29,16 @@ class TasksCommand extends BaseCommand
                 'prod'
             )
             ->addOption(
+                'project',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'The ID of the project'
+            )
+            ->addOption(
                 'board',
                 'b',
                 InputOption::VALUE_REQUIRED,
                 'The ID of the board whose structure you want to get.'
-            )
-            ->addOption(
-                'prova',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'blabla: '
             )
             ->addOption(
                 'short',
@@ -53,8 +53,18 @@ class TasksCommand extends BaseCommand
             );
 
         $this->setRequiredOptions([
-            'board' => 'Please enter the board id: ',
-            /* 'prova' => 'blabla: ', */
+            'project' => [
+                'question' => 'Choose a project: ',
+                'options' => function () {
+                    return $this->kbize->getProjects();
+                }
+            ],
+            'board' => [
+                'question' => 'Please enter the board id: ',
+                'options' => function () {
+                    return$this->kbize->getBoards($this->input->getOption('project'));
+                }
+            ],
         ]);
     }
 
@@ -62,7 +72,6 @@ class TasksCommand extends BaseCommand
     {
         $filters = $input->getArgument('filters');
 
-        $this->kbize = new Application($input->getOption('env'), $this, $output);
         $container = $this->kbize->getContainer();
 
         $fieldsToDisplay = $this->fieldsToDisplay($container, $input->getOption('short', false));

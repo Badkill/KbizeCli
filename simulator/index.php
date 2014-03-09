@@ -10,10 +10,10 @@ $app['debug'] = true;
 
 $app->post('/login', function (Request $request) {
 
-    $data = json_decode($request->getContent(), true);
+    $inputs = json_decode($request->getContent(), true);
     if (
-        $data['email'] == 'name.surname@email.com' &&
-        $data['pass']  == 'secretpassword'
+        $inputs['email'] == 'name.surname@email.com' &&
+        $inputs['pass']  == 'secretpassword'
     ) {
         $userData = [
             'email' => 'name.surname@email.com',
@@ -31,19 +31,38 @@ $app->post('/login', function (Request $request) {
 });
 
 $app->post('/get_projects_and_boards', function () {
-    $data = [
-        'foo' => 'bar',
-        'bo' => 'ciao',
+    $projectsAndBoards = [
+        'projects' => [
+            0 =>[
+                'name' => 'Company',
+                'id' => '1',
+                'boards' => [
+                    0 => [
+                        'name' => 'Main development',
+                        'id' => '2',
+                    ],
+                    1 => [
+                        'name' => 'Support board',
+                        'id' => '3',
+                    ],
+                ],
+            ],
+        ],
     ];
 
-    return json_encode($data);
+    return json_encode($projectsAndBoards);
 });
 
-$app->post('/get_all_tasks', function () use ($app) {
-    $yamlParser = new Parser();
-    $data = $yamlParser->parse(file_get_contents('../fixtures/tasks.yml'));
+$app->post('/get_all_tasks', function (Request $request) use ($app) {
+    $inputs = json_decode($request->getContent(), true);
+    if ($inputs['boardid'] != '2') {
+        return new Response('Board ' . $inputs['boardid'] . ' not exists', 400);
+    }
 
-    return $app->json($data, 200);
+    $yamlParser = new Parser();
+    $tasks = $yamlParser->parse(file_get_contents('../fixtures/tasks.yml'));
+
+    return $app->json($tasks, 200);
 });
 
 $app->run();
