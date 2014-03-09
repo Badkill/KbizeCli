@@ -1,1 +1,4 @@
+parameters:
+    path.data: 'data/test'
+
 services:

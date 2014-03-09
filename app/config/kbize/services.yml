@@ -1,5 +1,5 @@
 parameters:
-    path.data: 'data/env'
+    path.data: 'data/prod'
 
 services:
   httpClient:

@@ -3,7 +3,7 @@ imports:
 
 parameters:
   api:
-    baseUrl: http://kanbanize.com/index.php/api/kanbanize
+      baseUrl: https://onebip.kanbanize.com/index.php/api/kanbanize
 
 
   display:
