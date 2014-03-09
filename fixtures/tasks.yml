@@ -1,0 +1,1404 @@
+-
+    taskid: '10'
+    position: '0'
+    type: 'Feature request'
+    assignee: name.surname
+    title: 'The Task Title'
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: done_61
+    laneid: '10'
+    leadtime: 32
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Aborted
+    lanename: Connectivity
+    columnpath: Aborted
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '15'
+    position: '1'
+    type: None
+    assignee: paolo.rossi
+    title: 'Canada Fortumo integration'
+    description: 'Front end integration, to continue our business after our shortcode is suspended (15K/month)'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_15
+    laneid: '10'
+    leadtime: 32
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Customer Approval'
+    lanename: Connectivity
+    columnpath: 'Customer Approval'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '17'
+    position: '0'
+    type: 'Feature request'
+    assignee: None
+    title: 'Telcel SMT connectivity'
+    description: 'Porting of subscriptions and new activations for MX/Telcel on the new connectivity, where renewals are performed by the operator'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_2
+    laneid: '10'
+    leadtime: 32
+    blocked: '1'
+    blockedreason: 'Ultimate api for passive billing'
+    subtaskdetails: {  }
+    columnname: Ongoing
+    lanename: Connectivity
+    columnpath: Ongoing
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '20'
+    position: '1'
+    type: None
+    assignee: john.smith
+    title: 'Isp billing churn measure'
+    description: 'Monitoring of Wha and Sfr terminations before the end of the current renewal period'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '10'
+    leadtime: 31
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Connectivity
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '21'
+    position: '0'
+    type: None
+    assignee: mario.bianchi
+    title: 'Migration to Amazon RDS'
+    description: 'Come richiesto, per poter scalare mysql è necessario effettuare upgrade a mysql 5.6 per poter usare al meglio il servizio di Amazon RDS'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_2
+    laneid: '8'
+    leadtime: 32
+    blocked: '1'
+    blockedreason: 'waiting for pull request merging'
+    subtaskdetails: {  }
+    columnname: Ongoing
+    lanename: Infrastructure
+    columnpath: Ongoing
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '22'
+    position: '0'
+    type: 'Carrier issues and changes'
+    assignee: None
+    title: 'IPX ES/Yoigo flow and account update'
+    description: '[Product Backlog Item 1807370:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1807370)Onebip - IPX ES Yoigo connectivity and flow update'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '23'
+    position: '5'
+    type: 'Feature request'
+    assignee: None
+    title: 'Estonia & Latvia Euro switch'
+    description: "Change of currency to get an harmonized system for reporting\n\n\n[Product Backlog Item 1804643:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1804643)Onebip - ESTONIA & LATVIA switch from EEK & LVL to EUR"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: 'Product,Team,(Gokmen)'
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '24'
+    position: '1'
+    type: 'Feature request'
+    assignee: None
+    title: 'Freeze renewals for some msisdns ES/Vodafone '
+    description: "List monthly shared by Vodafone of not solvent post-paid users. Unfreeze them when they disappear from the list. Vodafone is not paying us for these users.\n\n\n[Product Backlog Item 1803823:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1803823)Onebip - Stopping renewal attempts for some Vodafone ES MSISDNs"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '25'
+    position: '2'
+    type: None
+    assignee: None
+    title: 'Isp billing instant churn notifications'
+    description: 'Set up a notification for instant churners received by the merchant.'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '27'
+    position: '0'
+    type: None
+    assignee: None
+    title: 'Change Subscription Activation Workflow '
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: '5'
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '4'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Subeng
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '28'
+    position: '3'
+    type: 'Service configuration'
+    assignee: None
+    title: 'IspBilling Badoo new boutique'
+    description: 'Create a separate boutique dedicated to Badoo services and migrate Badoo to it to reduce the risk of exceeding the limit of allowed customer complaints and have better reporting'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '29'
+    position: '4'
+    type: 'Carrier issues and changes'
+    assignee: None
+    title: 'Denmark 4T update'
+    description: "Align with the new 4T platform to recover traffic in this country\n\n\n[Product Backlog Item 1808540:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1808540)onebip - Denmark 4T update"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '30'
+    position: '1'
+    type: None
+    assignee: None
+    title: 'Different Billing Message For Each Fraction'
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '4'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Subeng
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '31'
+    position: '0'
+    type: None
+    assignee: None
+    title: 'Twoo FR MPME service configuration'
+    description: 'For web/mobile context'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: requested_12
+    laneid: '10'
+    leadtime: 25
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Selected
+    lanename: Connectivity
+    columnpath: Selected
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '34'
+    position: '0'
+    type: None
+    assignee: mario.bianchi
+    title: 'Puppet and Vagrant '
+    description: null
+    subtasks: '4'
+    subtaskscomplete: '2'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_13
+    laneid: '8'
+    leadtime: 32
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Tech Review'
+    lanename: Infrastructure
+    columnpath: 'Tech Review'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '35'
+    position: '0'
+    type: 'Feature request'
+    assignee: rolando.scevola
+    title: 'CB Events'
+    description: "Deliver every morning a log of the events for Subscriptions of the following services:\nAll the butterfly servicesBadoo ItalyTecnopatch (VideoHub)\nExoclickCultMovies\nThe delivery should be an e-mail to the already active mailing lists."
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#b3b340'
+    priority: High
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_15
+    laneid: '9'
+    leadtime: 31
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Customer Approval'
+    lanename: Backend
+    columnpath: 'Customer Approval'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '42'
+    position: '2'
+    type: 'Feature request'
+    assignee: None
+    title: 'CB Snapshot Report'
+    description: "To deliver a report with the structure decided in the meeting of October.\nThe structure is in the picture enclosed."
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#b3b340'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '9'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Backend
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '44'
+    position: '0'
+    type: None
+    assignee: None
+    title: 'Deactivation Channel on the Panel'
+    description: 'Customer Care wants to be able to see the unsubscription channel on the panel of Onebip'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '9'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Backend
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '46'
+    position: '3'
+    type: 'Feature request'
+    assignee: None
+    title: 'Ip Lookup API improvement'
+    description: "We should improve out Isp detection from IP API.\nIt is not optimized and we could improve our revenues with a better API."
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '9'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Backend
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '72'
+    position: '0'
+    type: None
+    assignee: rolando.scevola
+    title: 'Mpay anonymous operator flow on purchases'
+    description: 'Acquisition performed through redirect to operator page, configurable by merchant. Msisdn and operator are discovered upon billing completion.'
+    subtasks: '2'
+    subtaskscomplete: '2'
+    color: '#34a97b'
+    priority: High
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '10'
+    leadtime: 27
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Connectivity
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '82'
+    position: '1'
+    type: 'Feature request'
+    assignee: rolando.scevola
+    title: 'see ID 34 tasks'
+    description: null
+    subtasks: '8'
+    subtaskscomplete: '7'
+    color: '#b3b340'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_13
+    laneid: '8'
+    leadtime: 29
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Tech Review'
+    lanename: Infrastructure
+    columnpath: 'Tech Review'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '114'
+    position: '0'
+    type: None
+    assignee: john.smith
+    title: 'ISO-8859-1 heuristic for URL parameters'
+    description: "ISO-8859-1 before_walkin_parameters are patched to convert them to UTF-8 where possible.\nDocumentation needs to be updated by expressing UTF-8 requirements."
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_2
+    laneid: '7'
+    leadtime: 24
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Ongoing
+    lanename: Ultimate
+    columnpath: Ongoing
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '149'
+    position: '6'
+    type: 'Carrier issues and changes'
+    assignee: None
+    title: 'Onebip - Umobile Malaysia Micropayment implementation'
+    description: '[Product Backlog Item 1810006:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1810006)Onebip - Umobile Malaysia Micropayment implementation'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '157'
+    position: '1'
+    type: 'Feature request'
+    assignee: None
+    title: 'New Api (versus ultimate) for passive renewal / retry'
+    description: null
+    subtasks: '3'
+    subtaskscomplete: '1'
+    color: '#34a97b'
+    priority: High
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_2
+    laneid: '10'
+    leadtime: 22
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Ongoing
+    lanename: Connectivity
+    columnpath: Ongoing
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '166'
+    position: '2'
+    type: None
+    assignee: name.surname
+    title: 'Ultimate API for operator-driven renewals'
+    description: 'Necessary for Telcel SMT integration'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 1
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '174'
+    position: '1'
+    type: None
+    assignee: None
+    title: 'AAAS should redirect to payment page by kind of client'
+    description: 'Either to container or to container index.html page. This avoids an additional redirect.'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '179'
+    position: '0'
+    type: 'Feature request'
+    assignee: rolando.scevola
+    title: 'Create Behat Guardian for GO Pipeline (with Luca)'
+    description: "with Luca, modify build.xml and GO Pipeline\_to allow Behat to block the deploy in production"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '8'
+    leadtime: 10
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Infrastructure
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '206'
+    position: '0'
+    type: 'Feature request'
+    assignee: tom.scott
+    title: 'Mpay anonymous operator flow subscriptions (Twoo, Videohub, 69tv)'
+    description: 'Minimal implementation: pin flow inserting 2 times the msisdn, one click is actually 2 clicks'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '7'
+    leadtime: 2
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Ultimate
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '210'
+    position: '1'
+    type: 'Feature request'
+    assignee: mario.bianchi
+    title: 'Introduced on unto  s3get from Cli for techOps'
+    description: 'Configured on ws-u-1.production.aws.onebip.com the s3get command line interface to query S3 Amazon API'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '8'
+    leadtime: 15
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Infrastructure
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '222'
+    position: '0'
+    type: None
+    assignee: paolo.rossi
+    title: 'Flag to run subeng in development mode (simulating onebip ultimate) '
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '4'
+    leadtime: 15
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Subeng
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '235'
+    position: '7'
+    type: None
+    assignee: None
+    title: 'Mpay subscription: delivery report server 2 server'
+    description: 'When the user is redirected back, Mpay can notify us via server 2 server. According to Anna Maria, 15% of users is lost in the redirect while coming back and this would let us complete their transaction.'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '292'
+    position: '1'
+    type: 'Reporting and analysis'
+    assignee: None
+    title: 'recurring extractions - sms activity'
+    description: "Every 2nd day of each month we need some data extractions from the \"sms activity\" section of Onebip panel.\_\nEach extraction must be related to the month before (i.e. on the 2nd of March we should receive all the transactions of February) and must be related only to transactions in status \"completed\".\nThe extractions we need are the following:\n- Italy (all merchants)\n- Spain (all merchants)\n- Badoo Aggregation Limited (both the 2 accounts)\n\n-\_[simon@globalcharge.com](http://my.onebip.com/users/detail/simon@globalcharge.com)\n-\_[payment_neomobile@pionix.ro](http://my.onebip.com/users/detail/payment_neomobile@pionix.ro)\n-\_[paymentdev@gameforge.de](http://my.onebip.com/users/detail/paymentdev@gameforge.de)\n-\_[nick@netlog.com](http://my.onebip.com/users/detail/nick@netlog.com)\n\n\nThere's a PBI opened in TFS -->\_[Product Backlog Item 1811529:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1811529)recurring extractions - sms activity\n\n\nCould you please send the extractions to reporting&control@neomobile.com?"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: High
+    size: null
+    deadline: '03 Mar'
+    deadlineoriginalformat: '2014-03-03'
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '9'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Backend
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '294'
+    position: '4'
+    type: 'Feature request'
+    assignee: None
+    title: 'Onebip - Number look-up improvement'
+    description: "We will look-up operator of an MSISDN inserted by the end-user from the number look-up provider or from our database and display the operator information on the second step (i.e. please send keyword, please insert the PIN etc...) on our payment page with a sentence.\n\nThis sentence could be \"Your operator is not VODAFONE? click here to update?\".\n\nSo that if the end-user ported his MSISDN to another operator we will give them a chance to select the correct operator on the payment page by displaying a dropdown menu of all the operators in that country and they will be able to continue with the purchase. Then, we will update our database with the correct operator.\n\n\n\n\n[Product Backlog Item 1805611:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1805611)Onebip - Number look-up improvement"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '9'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Backend
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '295'
+    position: '8'
+    type: 'Feature request'
+    assignee: None
+    title: 'Onebip - Changing number look-up for Turkey'
+    description: "We use number look-up (Mach) for each transaction and update the user’s operator on our db and use this info for the next times to call the subscription renewals to Retromedya. If the user change the operator later, we still push the old operator again and again and our conversions decrease.\n\nPlease disable number look-up (Mach) and pass operator id as 1 (Turkcell) for each pull and subscription activation transactions and use the operator id info that Retromedya return us and update it in our db for the subscription renewal transactions.\n\n\n[Product Backlog Item 1803790:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1803790)Onebip - Changing number look-up for Turkey"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '296'
+    position: '3'
+    type: 'Feature request'
+    assignee: None
+    title: 'Onebip - Double opt-in management'
+    description: "I want to be able to manage double opt-in flow in Onebip on the same purchase session so that we can support the countries and the carriers where we need double opt-in and be compliant with their technology.\n\n\n\n\n[Requirement 1796413:](https://tfs.neomobile.net:8088/tfs/Neomobile/Standard/_workitems/edit/1796413)Onebip - Double opt-in management"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Low
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '299'
+    position: '0'
+    type: 'Feature request'
+    assignee: None
+    title: 'Onebip - Dropdown operator selection on front-end'
+    description: "We want to have a dropdown menu with the list of the operators for users to select their operator on the landing (MSISDN insertion) page so that we will eliminate the issues for number look-up and increase the conversion rates.\n\n\n\n[Product Backlog Item 1811537:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1811537)Onebip - Dropdown operator selection on front-end"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '317'
+    position: '0'
+    type: 'Feature request'
+    assignee: mario.bianchi
+    title: 'Less colorized '
+    description: 'Added puppet type for handling custom less colorized'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '8'
+    leadtime: 3
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Infrastructure
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '322'
+    position: '2'
+    type: None
+    assignee: paolo.rossi
+    title: 'Verfiy Badoo low billing rate '
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '4'
+    leadtime: 2
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Subeng
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '324'
+    position: '4'
+    type: 'Feature request'
+    assignee: None
+    title: 'Onebip - Multiple SMS features (multiple billing)'
+    description: "New feature:\n\nCharge users with single payment session by enabling users sending multiple SMS feature and be able to bill higher price points with better billing success rate than wallet flow which will not be supported anymore.\n\n\n\n[Product Backlog Item 1811908:](https://tfs.neomobile.net:8088/tfs/Neomobile/Agile/_workitems/edit/1811908)Onebip - Multiple SMS features (multiple billing)"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '326'
+    position: '0'
+    type: None
+    assignee: None
+    title: 'Migrate Butterfly, Badoo, Nanalab to Mpayit operator flow'
+    description: 'To Be Done on March 6th afternoon'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: requested_12
+    laneid: '7'
+    leadtime: 3
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Selected
+    lanename: Ultimate
+    columnpath: Selected
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '327'
+    position: '0'
+    type: None
+    assignee: tom.scott
+    title: 'Mpay subscription one click instead of 2 clicks'
+    description: 'The user will not need to walk in explicitly on Onebip side. The msisdn used is the detected one.'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_15
+    laneid: '7'
+    leadtime: 3
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Customer Approval'
+    lanename: Ultimate
+    columnpath: 'Customer Approval'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '331'
+    position: '1'
+    type: None
+    assignee: paolo.rossi
+    title: 'Fix libraries dependencies'
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: archive_6
+    laneid: '4'
+    leadtime: 1
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Archive
+    lanename: Subeng
+    columnpath: Archive
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '335'
+    position: '2'
+    type: None
+    assignee: tom.scott
+    title: 'Populating msisdn in Mpay pin flow on operator page'
+    description: 'Msisdn needs to be passed during StartWebBillingTransaction call so the user only enters it once'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_15
+    laneid: '10'
+    leadtime: 2
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Customer Approval'
+    lanename: Connectivity
+    columnpath: 'Customer Approval'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '336'
+    position: '5'
+    type: None
+    assignee: None
+    title: 'New UI on subscriptions'
+    description: 'Needed for Mpay iframe HTTP vs HTTPS tricks'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '337'
+    position: '0'
+    type: None
+    assignee: tom.scott
+    title: 'Support user without cookies on Mpay operator flow'
+    description: '2.5% of traffic'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_15
+    laneid: '10'
+    leadtime: 2
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: 'Customer Approval'
+    lanename: Connectivity
+    columnpath: 'Customer Approval'
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '338'
+    position: '6'
+    type: None
+    assignee: None
+    title: 'Abort transfer in if user is blocked during anonymous flow'
+    description: 'We only find out after billing, aborting is all we can do'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Ultimate
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '339'
+    position: '9'
+    type: None
+    assignee: None
+    title: 'Generic failures in Mpay billing completion should abort'
+    description: 'Right now the page stays there spinning'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '340'
+    position: '10'
+    type: None
+    assignee: None
+    title: 'Short retry on mpay billing completion'
+    description: 'Right now no retry is performed after a timeout on complete call in operator flow'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: backlog_5
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Backlog
+    lanename: Connectivity
+    columnpath: Backlog
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '342'
+    position: '0'
+    type: None
+    assignee: paolo.rossi
+    title: 'Handle anonymous operator flow'
+    description: null
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: requested_12
+    laneid: '4'
+    leadtime: 1
+    blocked: '1'
+    blockedreason: 'missing requirements'
+    subtaskdetails: {  }
+    columnname: Selected
+    lanename: Subeng
+    columnpath: Selected
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '354'
+    position: '2'
+    type: None
+    assignee: name.surname
+    title: 'Timit connectivity reactivation purchase 1.00'
+    description: 'Complete 1.00 test purchase with Timit smsc.'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_2
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Ongoing
+    lanename: Connectivity
+    columnpath: Ongoing
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '355'
+    position: '3'
+    type: None
+    assignee: john.smith
+    title: 'H3git connectivity reactivation purchase 1.00'
+    description: 'Complete 1.00 test purchase with H3git smsc.'
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: progress_2
+    laneid: '10'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Ongoing
+    lanename: Connectivity
+    columnpath: Ongoing
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
+-
+    taskid: '356'
+    position: '1'
+    type: 'Feature request'
+    assignee: name.surname
+    title: 'Merchant API'
+    description: "As Jacopo\nI want an API giving me the list of existing merchants filtered by e-mail\nSo that I can implement new payout rules creation in new panel"
+    subtasks: '0'
+    subtaskscomplete: '0'
+    color: '#34a97b'
+    priority: Average
+    size: null
+    deadline: null
+    deadlineoriginalformat: null
+    extlink: null
+    tags: null
+    columnid: requested_12
+    laneid: '7'
+    leadtime: 0
+    blocked: '0'
+    blockedreason: null
+    subtaskdetails: {  }
+    columnname: Selected
+    lanename: Ultimate
+    columnpath: Selected
+    logedtime: 0
+    links: { child: 0, mirror: 0, parent: 0 }
