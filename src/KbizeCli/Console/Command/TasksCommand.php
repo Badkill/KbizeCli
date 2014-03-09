@@ -60,7 +60,7 @@ class TasksCommand extends BaseCommand
                 }
             ],
             'board' => [
-                'question' => 'Please enter the board id: ',
+                'question' => 'Choose the board id: ',
                 'options' => function () {
                     return$this->kbize->getBoards($this->input->getOption('project'));
                 }

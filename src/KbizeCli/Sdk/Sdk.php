@@ -27,7 +27,7 @@ class Sdk implements SdkInterface
         try {
             return $this->send($request);
         } catch (ClientErrorResponseException $e) {
-            throw new ForbiddenException('Authentication failed');
+            throw new ForbiddenException("Authentication failed\n Email and/or password are wrong");
         }
     }
 

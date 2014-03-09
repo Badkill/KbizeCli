@@ -72,6 +72,9 @@ abstract class BaseCommand extends Command implements Questioner
         $this->input = $input;
         $this->output = $output;
         $this->kbize = new Application($input->getOption('env'), $this, $output);
+        if (!$this->kbize->isAuthenticated()) {
+            $this->login();
+        }
     }
 
     protected function askForMultipleOptions($question, array $options, callable $validation) //FIXME:! RENAME IT
@@ -90,30 +93,28 @@ abstract class BaseCommand extends Command implements Questioner
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $this->kbize->authenticate();
         $this->askMissingRequiredOptions($input, $output);
     }
 
-    /* protected function interact(InputInterface $input, OutputInterface $output) */
-    /* { */
-    /*     echo "pippo"; */
-    /*     exit; */
+    protected function login()
+    {
+        $dialog = $this->getHelper('dialog');
 
-    /*     $defaultType = 1; */
-    /*     $question = array( */
-    /*         "<comment>1</comment>: Messages\n", */
-    /*         "<comment>2</comment>: Jobs\n", */
-    /*         "<question>Choose a type:</question> [<comment>$defaultType</comment>] ", */
-    /*     ); */
+        $password = "";
+        $email = $dialog->askAndValidate(
+            $this->output,
+            'Please insert your Kanbanize email: ',
+            function ($email) use ($dialog, $password) {
+                $password = $dialog->askHiddenResponse(
+                    $this->output,
+'*************************************************************************************
+ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
+*************************************************************************************
+Please insert your password: '
+                );
 
-    /*     $type = $this->getHelper('dialog')->askAndValidate($output, $question, function($typeInput) { */
-    /*         if (!in_array($typeInput, array(1, 2))) { */
-    /*             throw new \InvalidArgumentException('Invalid type'); */
-    /*         } */
-
-    /*         return $typeInput; */
-    /*     }, 10, $defaultType); */
-
-    /*     $input->setArgument('type', $type); */
-    /* } */
+                $user = $this->kbize->login($email, $password);
+            }
+        );
+    }
 }

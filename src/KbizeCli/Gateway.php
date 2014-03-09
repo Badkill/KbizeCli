@@ -25,6 +25,11 @@ class Gateway implements KbizeInterface
         }
     }
 
+    public function isAuthenticated()
+    {
+        return false;
+    }
+
     public function login($email, $password)
     {
         $userData = $this->sdk->login($email, $password);

@@ -3,6 +3,7 @@
 use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
+    Behat\Behat\Event\ScenarioEvent,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
@@ -38,6 +39,22 @@ class FeatureContext extends BehatContext
     }
 
     /**
+      * @BeforeScenario
+      */
+    public function createClient(ScenarioEvent $event)
+    {
+        $this->client = new Client();
+    }
+
+    /**
+     * @AfterScenario
+     */
+    public function destroyClient(ScenarioEvent $event)
+    {
+        $this->client->__destruct();
+    }
+
+    /**
      * @Given /^I am unauthenticated user$/
      */
     public function iAmUnauthenticatedUser()
@@ -53,7 +70,7 @@ class FeatureContext extends BehatContext
      */
     public function iWantToViewTasksList()
     {
-        $this->client = new Client();
+        $this->client->command('tasks');
     }
 
     /**
@@ -70,7 +87,7 @@ class FeatureContext extends BehatContext
     public function iShouldViewInTheOutput($text)
     {
         if (!isset($this->output)) {
-            $this->client->command()->execute();
+            $this->client->execute();
             $this->output = $this->client->getDisplay();
         }
 

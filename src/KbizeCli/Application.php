@@ -39,9 +39,9 @@ class Application
 
     public function __call($method, $args)
     {
-        return $this->retryOnForbiddenException(function () use ($method, $args) {
+        /* return $this->retryOnForbiddenException(function () use ($method, $args) { */
             return call_user_func_array([$this->kbize, $method], $args);
-        });
+        /* }); */
     }
 
     public function getContainer()

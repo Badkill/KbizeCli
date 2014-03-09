@@ -103,4 +103,14 @@ class InputStream {
             return false;
         }
     }
+
+    function stream_flush()
+    {
+
+    }
+
+    function stream_close()
+    {
+
+    }
 }

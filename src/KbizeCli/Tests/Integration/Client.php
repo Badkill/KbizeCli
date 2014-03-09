@@ -18,11 +18,17 @@ class Client //FIXME: CLI
     {
         $this->inputStream = $this->inputStream();
         $this->application = $this->application();
+
     }
 
-    public function command()
+    public function __destruct()
     {
-        $this->command = $this->application->find('tasks');
+        $this->closeInputStream();
+    }
+
+    public function command($command)
+    {
+        $this->command = $this->application->find($command);
 
         return $this;
     }
@@ -87,10 +93,26 @@ class Client //FIXME: CLI
 
     private function inputStream()
     {
-        stream_wrapper_register("cli", "\KbizeCli\Tests\Integration\InputStream") or die("Failed to register protocol");
-
+        $this->registerProtocol();
         $stream = fopen("cli://inputStream", "r+", false);
 
         return $stream;
+    }
+
+    private function closeInputStream()
+    {
+        if (is_resource($this->inputStream)) {
+            fclose($this->inputStream);
+        }
+    }
+
+    //FIXME:! Move out
+    private function registerProtocol()
+    {
+        static $isRegistered = false;
+        if (!$isRegistered) {
+            stream_wrapper_register("cli", "\KbizeCli\Tests\Integration\InputStream") or die("Failed to register protocol");
+            $isRegistered = true;
+        }
     }
 }
