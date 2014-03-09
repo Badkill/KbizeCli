@@ -35,6 +35,12 @@ class TasksCommand extends BaseCommand
                 'The ID of the board whose structure you want to get.'
             )
             ->addOption(
+                'prova',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'blabla: '
+            )
+            ->addOption(
                 'short',
                 '',
                 InputOption::VALUE_NONE,
@@ -48,6 +54,7 @@ class TasksCommand extends BaseCommand
 
         $this->setRequiredOptions([
             'board' => 'Please enter the board id: ',
+            /* 'prova' => 'blabla: ', */
         ]);
     }
 
@@ -59,10 +66,7 @@ class TasksCommand extends BaseCommand
         $container = $this->kbize->getContainer();
 
         $fieldsToDisplay = $this->fieldsToDisplay($container, $input->getOption('short', false));
-
-        $taskCollection = new TaskCollection(
-            $this->kbize->getAllTasks($input->getOption('board'))
-        );
+        $taskCollection = $this->kbize->getAllTasks($input->getOption('board'));
 
         if (end($filters) == "show") {
             array_pop($filters);
@@ -76,7 +80,7 @@ class TasksCommand extends BaseCommand
         }
 
 
-        $table = $this->getHelperSet()->get('alternate-table')
+        $table = $this->getHelper('alternate-table')
             ->setLayout(TableHelper::LAYOUT_BORDERLESS)
             ->setCellRowContentFormat('%s ')
             ;
@@ -109,7 +113,6 @@ class TasksCommand extends BaseCommand
         $rows = [];
 
         foreach ($taskCollection->filter($filters) as $task) {
-
             $row = [];
             foreach ($fieldsToDisplay as $field) {
                 $row[] = $task[$field];
@@ -155,7 +158,7 @@ class TasksCommand extends BaseCommand
             $rows[] = [$field, $value];
         }
 
-        $table = $this->getHelperSet()->get('alternate-table')
+        $table = $this->getHelper('alternate-table')
             ->setLayout(TableHelper::LAYOUT_BORDERLESS)
             ->setCellRowContentFormat('%s ');
             /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
