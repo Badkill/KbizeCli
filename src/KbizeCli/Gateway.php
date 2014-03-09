@@ -27,7 +27,7 @@ class Gateway implements KbizeInterface
 
     public function isAuthenticated()
     {
-        return false;
+        return $this->user->isAuthenticated();
     }
 
     public function login($email, $password)

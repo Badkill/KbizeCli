@@ -18,7 +18,11 @@ class Client //FIXME: CLI
     {
         $this->inputStream = $this->inputStream();
         $this->application = $this->application();
+    }
 
+    public function getInputStream()
+    {
+        return $this->inputStream;
     }
 
     public function __destruct()

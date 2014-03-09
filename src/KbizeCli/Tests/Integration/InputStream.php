@@ -55,11 +55,7 @@ class InputStream {
 
     function stream_eof()
     {
-        error_log('-----------------');
-        error_log(var_export($this->data, true));
-        $eof = !count($this->data);
-        error_log(var_export($eof, true));
-        return $eof;
+        return !count($this->data);
     }
 
     function stream_seek($offset, $whence)

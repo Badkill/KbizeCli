@@ -55,14 +55,26 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^I am unauthenticated user$/
+     * @Given /^I am an unauthenticated user$/
      */
-    public function iAmUnauthenticatedUser()
+    public function iAmAnUnauthenticatedUser()
     {
         $file = 'data/test/user.yml'; //FIXME:!!!
         if (file_exists($file)) {
             unlink($file);
         }
+    }
+
+    /**
+     * @Given /^I am an authenticated user$/
+     */
+    public function iAmAnAuthenticatedUser()
+    {
+        if (!is_dir('data/test')) {
+            mkdir ('data/test');
+        }
+
+        copy('fixtures/user.yml', 'data/test/user.yml');
     }
 
     /**
