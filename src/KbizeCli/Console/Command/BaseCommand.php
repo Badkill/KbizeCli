@@ -80,6 +80,11 @@ abstract class BaseCommand extends Command implements Questioner
     protected function askForMultipleOptions($question, array $options, callable $validation) //FIXME:! RENAME IT
     {
         $defaultChoice = array_keys($options)[0];
+
+        if (count($options) == 1) {
+            return $defaultChoice;
+        }
+
         $outputQuestion = [];
         foreach ($options as $id => $label) {
             $outputQuestion[] = "<comment>$id</comment>: $label\n";
