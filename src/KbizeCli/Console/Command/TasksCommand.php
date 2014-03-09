@@ -46,6 +46,12 @@ class TasksCommand extends BaseCommand
                 InputOption::VALUE_NONE,
                 'Display a minimal subset of information'
             )
+            ->addOption(
+                'own',
+                'o',
+                InputOption::VALUE_NONE,
+                'Display only my own tasks'
+            )
             ->addArgument(
                 'filters',
                 InputArgument::IS_ARRAY,
@@ -71,6 +77,9 @@ class TasksCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filters = $input->getArgument('filters');
+        if ($input->getOption('own')) {
+            $filters[] = 'assignee=' . $this->kbize->getUser()->username;
+        }
 
         $container = $this->kbize->getContainer();
 

@@ -13,11 +13,13 @@ class Client //FIXME: CLI
     private $application;
     private $command;
     private $commandTester;
+    private $options = [];
 
     public function __construct()
     {
         $this->inputStream = $this->inputStream();
         $this->application = $this->application();
+        $this->options['--env'] = 'test';
     }
 
     public function getInputStream()
@@ -65,6 +67,11 @@ class Client //FIXME: CLI
         );
     }
 
+    public function addOption($key, $value)
+    {
+        $this->options[$key] = $value;
+    }
+
     public function execute()
     {
         $dialog = $this->command->getHelper('dialog');
@@ -73,9 +80,7 @@ class Client //FIXME: CLI
         $this->commandTester = new CommandTester($this->command);
         $this->commandTester->execute([
             'command' => $this->command->getName(),
-                /* '--board' => '2', */
-                '--env' => 'test',
-        ], [
+        ] + $this->options, [
             'interactive' => true,
         ]);
     }

@@ -94,6 +94,11 @@ class Gateway implements KbizeInterface
         return call_user_func_array([$this->sdk, $method], $args);
     }
 
+    public function getUser()
+    {
+        return $this->user;
+    }
+
     private function cache($file, array $data)
     {
         $this->cache->write($this->cachePath . DIRECTORY_SEPARATOR . $file, $data);

@@ -67,6 +67,11 @@ class User implements UserInterface
         return $this->data;
     }
 
+    public function __get($key)
+    {
+        return $this->data[$key];
+    }
+
     private function ensureIsValidData(array $data)
     {
         //TODO:! Data Validation

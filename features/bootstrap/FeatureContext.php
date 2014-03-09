@@ -36,6 +36,7 @@ class FeatureContext extends BehatContext
         // Initialize your context here
         $fs = new Filesystem();
         $fs->remove('data/test');
+        $this->output = null;
     }
 
     /**
@@ -98,12 +99,17 @@ class FeatureContext extends BehatContext
      */
     public function iShouldViewInTheOutput($text)
     {
-        if (!isset($this->output)) {
-            $this->client->execute();
-            $this->output = $this->client->getDisplay();
-        }
+        $output = $this->execute();
+        assertContains($text, $output);
+    }
 
-        assertContains($text, $this->output);
+    /**
+     * @Given /^I should not view in the output "([^"]*)"$/
+     */
+    public function iShouldNotViewInTheOutput($text)
+    {
+        $output = $this->execute();
+        assertNotContains($text, $output);
     }
 
     /**
@@ -112,5 +118,24 @@ class FeatureContext extends BehatContext
     public function theClientHasNoMoreInput()
     {
         $this->client->ensureIsEmpty();
+    }
+
+    /**
+     * @Given /^I use the option \"([^ ]*) ([^\"]*)\"$/
+     * @Given /^I use the option "([^" ]*)"$/
+     */
+    public function iUseTheOption($option, $value = true)
+    {
+        $this->client->addOption($option, $value);
+    }
+
+    private function execute()
+    {
+        if (!isset($this->output)) {
+            $this->client->execute();
+            $this->output = $this->client->getDisplay();
+        }
+
+        return $this->output;
     }
 }
