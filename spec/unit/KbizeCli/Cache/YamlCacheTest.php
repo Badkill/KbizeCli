@@ -58,4 +58,16 @@ class YamlCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($data, $this->cache->read($this->file));
     }
+
+    public function testClearCache()
+    {
+        vfsStream::newDirectory('cache/', 0700)->at($this->root);
+        vfsStream::newDirectory('cache/someDir', 0700)->at($this->root);
+        vfsStream::newDirectory('cache/someFile.yml', 0600)->at($this->root);
+        $this->cache->clear(vfsStream::url($this->basePath . 'cache/'));
+
+        $this->assertFalse($this->root->hasChild('cache'));
+        $this->assertFalse($this->root->hasChild('cache/someDir'));
+        $this->assertFalse($this->root->hasChild('cache/someFile.yml'));
+    }
 }

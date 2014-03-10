@@ -24,7 +24,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(false));
 
         $this->gw = $this->gw();
-        $this->gw->getProjectsAndBoards();
+        $this->gw->getProjects();
     }
 
     public function testCallAnApiWhichRequiresAuthenticationWithApikeyWorksRight()
@@ -32,7 +32,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->userIsAuthenticated();
         $this->gw = $this->gw();
 
-        $this->gw->getProjectsAndBoards();
+        $this->gw->getProjects();
     }
 
     private function sdk()

@@ -1,6 +1,8 @@
 <?php
 namespace KbizeCli;
 
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+
 use KbizeCli\Sdk\ApiInterface;
 use KbizeCli\Sdk\Sdk;
 use KbizeCli\Sdk\Exception\ForbiddenException;
@@ -63,15 +65,6 @@ class Gateway implements KbizeInterface
         return $boards;
     }
 
-    private function getProjectsAndBoards()
-    {
-        if (!isset($this->projectsAndBoards)) {
-            $this->projectsAndBoards = $this->callSdk('getProjectsAndBoards');
-        }
-
-        return $this->projectsAndBoards;
-    }
-
     public function getAllTasks($boardId, $useCache = true)
     {
         $cacheFile = $boardId . DIRECTORY_SEPARATOR . 'tasks.yml';
@@ -97,6 +90,20 @@ class Gateway implements KbizeInterface
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function clearCache()
+    {
+        $this->cache->clear($this->cachePath);
+    }
+
+    private function getProjectsAndBoards()
+    {
+        if (!isset($this->projectsAndBoards)) {
+            $this->projectsAndBoards = $this->callSdk('getProjectsAndBoards');
+        }
+
+        return $this->projectsAndBoards;
     }
 
     private function cache($file, array $data)

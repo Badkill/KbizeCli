@@ -15,8 +15,8 @@ use Symfony\Component\Filesystem\Exception\IOException;
 //
 // Require 3rd-party libraries here:
 //
-   require_once 'PHPUnit/Autoload.php';
-   require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/Assert/Functions.php';
 
 require 'bootstrap.php';
 
@@ -33,6 +33,7 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
+
         // Initialize your context here
         $fs = new Filesystem();
         $fs->remove('data/test');

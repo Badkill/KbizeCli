@@ -78,6 +78,10 @@ abstract class BaseCommand extends Command implements Questioner
             $this->login();
         }
 
+        if ($input->getOption('no-cache')) {
+            $this->kbize->clearCache(false);
+        }
+
         $this->addFilterInCaseOwnOptionIsPresent($input);
     }
 

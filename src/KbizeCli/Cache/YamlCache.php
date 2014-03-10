@@ -3,6 +3,8 @@ namespace KbizeCli\Cache;
 
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 class YamlCache implements Cache
 {
@@ -37,5 +39,13 @@ class YamlCache implements Cache
         }
 
         //TODO: check if is writable, throw exception if not, etc...
+    }
+
+    public function clear($path)
+    {
+        if (file_exists($path)) {
+            $fs = new Filesystem();
+            $fs->remove($path);
+        }
     }
 }

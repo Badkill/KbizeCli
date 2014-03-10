@@ -1,4 +1,5 @@
 parameters:
     path.data: 'data/test'
+    path.cache:  'data/test/cache'
 
 services:

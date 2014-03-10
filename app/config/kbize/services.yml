@@ -1,5 +1,6 @@
 parameters:
-    path.data: 'data/prod'
+    path.data: 'data'
+    path.cache:  'data/cache'
 
 services:
   httpClient:
@@ -14,7 +15,7 @@ services:
 
   kbize:
     class: KbizeCli\Gateway
-    arguments: ["@sdk", "@user", "@yamlCache", '%path.data%']
+    arguments: ["@sdk", "@user", "@yamlCache", '%path.cache%']
 
   user:
     class: KbizeCli\User
