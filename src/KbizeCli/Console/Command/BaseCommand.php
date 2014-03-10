@@ -77,6 +77,8 @@ abstract class BaseCommand extends Command implements Questioner
         if (!$this->kbize->isAuthenticated()) {
             $this->login();
         }
+
+        $this->addFilterInCaseOwnOptionIsPresent($input);
     }
 
     protected function askForMultipleOptions($question, array $options, callable $validation) //FIXME:! RENAME IT
@@ -123,5 +125,14 @@ Please insert your password: '
                 $user = $this->kbize->login($email, $password);
             }
         );
+    }
+
+    private function addFilterInCaseOwnOptionIsPresent(InputInterface $input)
+    {
+        if ($input->getOption('own')) {
+            $filters = $input->getArgument('filters');
+            array_unshift($filters, 'assignee=' . $this->kbize->getUser()->username);
+            $input->setArgument('filters', $filters);
+        }
     }
 }

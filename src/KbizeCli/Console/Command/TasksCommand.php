@@ -77,9 +77,6 @@ class TasksCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filters = $input->getArgument('filters');
-        if ($input->getOption('own')) {
-            $filters[] = 'assignee=' . $this->kbize->getUser()->username;
-        }
 
         $container = $this->kbize->getContainer();
 
