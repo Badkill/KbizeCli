@@ -46,12 +46,14 @@ abstract class BaseCommand extends Command implements Questioner
     {
         foreach ($this->requireOptions as $key => $data) {
             $output->writeln('');
-
-            if (!is_null($input->getOption($key, null))) {
-                continue;
-            }
-
             $options = is_callable($data['options']) ? $data['options']() : $data['options'];
+
+            if (!is_null($currentChoice = $input->getOption($key, null))) {
+                if (in_array($currentChoice, array_keys($options))) {
+                    continue;
+                }
+                // TODO:! show the error even if the available choices is only one
+            }
 
             $this->input->setOption($key, $this->askForMultipleOptions(
                 $data['question'],
