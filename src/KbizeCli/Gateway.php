@@ -67,17 +67,8 @@ class Gateway implements KbizeInterface
 
     public function getAllTasks($boardId, $useCache = true)
     {
-        $cacheFile = $boardId . DIRECTORY_SEPARATOR . 'tasks.yml';
-        $tasks = [];
-
-        if ($useCache) {
-            $tasks = $this->fromCache($cacheFile);
-        }
-
-        if (!$tasks) {
-            $tasks = $this->callSdk('getAllTasks', [$boardId]);
-            $this->cache($cacheFile, $tasks);
-        }
+        $cacheFile = $useCache ? $boardId . DIRECTORY_SEPARATOR . 'tasks.yml' : null;
+        $tasks = $this->callSdkWithCache('getAllTasks', [$boardId], $cacheFile);
 
         return TaskCollection::box($tasks);
     }
@@ -85,6 +76,26 @@ class Gateway implements KbizeInterface
     public function callSdk($method, array $args = [])
     {
         return call_user_func_array([$this->sdk, $method], $args);
+    }
+
+    //TODO:! cache should depends on args
+    public function callSdkWithCache($method, array $args = [], $cacheFile = null)
+    {
+        $data = [];
+
+        if ($cacheFile) {
+            $data = $this->fromCache($cacheFile);
+        }
+
+        if (!$data) {
+            $data = $this->callSdk($method, $args);
+
+            if ($cacheFile) {
+                $this->cache($cacheFile, $data);
+            }
+        }
+
+        return $data;
     }
 
     public function getUser()
@@ -100,17 +111,8 @@ class Gateway implements KbizeInterface
     private function getProjectsAndBoards($useCache = true)
     {
         if (!isset($this->projectsAndBoards)) {
-            $cacheFile = 'projectsAndBoards.yml';
-            $this->projectsAndBoards = [];
-
-            if ($useCache) {
-                $this->projectsAndBoards = $this->fromCache($cacheFile);
-            }
-
-            if (!$this->projectsAndBoards) {
-                $this->projectsAndBoards = $this->callSdk('getProjectsAndBoards');
-                $this->cache($cacheFile, $this->projectsAndBoards);
-            }
+            $cacheFile = $useCache ? 'projectsAndBoards.yml' : null;
+            $this->projectsAndBoards = $this->callSdkWithCache('getProjectsAndBoards', [], $cacheFile);
         }
 
         return $this->projectsAndBoards;
