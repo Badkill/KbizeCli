@@ -97,10 +97,20 @@ class Gateway implements KbizeInterface
         $this->cache->clear($this->cachePath);
     }
 
-    private function getProjectsAndBoards()
+    private function getProjectsAndBoards($useCache = true)
     {
         if (!isset($this->projectsAndBoards)) {
-            $this->projectsAndBoards = $this->callSdk('getProjectsAndBoards');
+            $cacheFile = 'projectsAndBoards.yml';
+            $this->projectsAndBoards = [];
+
+            if ($useCache) {
+                $this->projectsAndBoards = $this->fromCache($cacheFile);
+            }
+
+            if (!$this->projectsAndBoards) {
+                $this->projectsAndBoards = $this->callSdk('getProjectsAndBoards');
+                $this->cache($cacheFile, $this->projectsAndBoards);
+            }
         }
 
         return $this->projectsAndBoards;
