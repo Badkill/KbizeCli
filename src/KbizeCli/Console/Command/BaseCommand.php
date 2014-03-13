@@ -13,6 +13,44 @@ use KbizeCli\Application;
  */
 abstract class BaseCommand extends Command implements Questioner
 {
+    protected function configure()
+    {
+        $this->addOption(
+            'board',
+            'b',
+            InputOption::VALUE_REQUIRED,
+            'The ID of the board whose structure you want to get.'
+        )
+        ->addOption(
+            'env',
+            'e',
+            InputOption::VALUE_OPTIONAL,
+            'set the environment for different configuration',
+            'prod'
+        )
+        ->addOption(
+            'project',
+            'p',
+            InputOption::VALUE_REQUIRED,
+            'The ID of the project'
+        );
+
+        $this->setRequiredOptions([
+            'project' => [
+                'question' => 'Choose a project: ',
+                'options' => function () {
+                    return $this->kbize->getProjects();
+                }
+            ],
+            'board' => [
+                'question' => 'Choose the board id: ',
+                'options' => function () {
+                    return$this->kbize->getBoards($this->input->getOption('project'));
+                }
+            ],
+        ]);
+    }
+
     protected $requiredOptions;
 
     public function ask($question, $default = '', $hiddenResponse = false)
@@ -71,6 +109,7 @@ abstract class BaseCommand extends Command implements Questioner
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
+        $input->setInteractive(true);
         $this->input = $input;
         $this->output = $output;
         $this->kbize = new Application($input->getOption('env'), $this, $output);
@@ -118,12 +157,12 @@ abstract class BaseCommand extends Command implements Questioner
             $this->output,
             'Please insert your Kanbanize email: ',
             function ($email) use ($dialog, $password) {
-                $password = $dialog->askHiddenResponse(
+                $password = $dialog->ask(//HiddenResponse(
                     $this->output,
-'*************************************************************************************
-ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
-*************************************************************************************
-Please insert your password: '
+                    '*************************************************************************************
+                    ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
+                    *************************************************************************************
+                    Please insert your password: '
                 );
 
                 $user = $this->kbize->login($email, $password);

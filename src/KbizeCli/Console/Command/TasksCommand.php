@@ -18,28 +18,11 @@ class TasksCommand extends BaseCommand
 {
     protected function configure()
     {
+        parent::configure();
+
         $this->setName('tasks')
             ->setDescription('Show a list of tasks')
             ->setHelp('This is the help for the tasks command.')
-            ->addOption(
-                'env',
-                'e',
-                InputOption::VALUE_OPTIONAL,
-                'set the environment for different configuration',
-                'prod'
-            )
-            ->addOption(
-                'project',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'The ID of the project'
-            )
-            ->addOption(
-                'board',
-                'b',
-                InputOption::VALUE_REQUIRED,
-                'The ID of the board whose structure you want to get.'
-            )
             ->addOption(
                 'short',
                 '',
@@ -63,21 +46,6 @@ class TasksCommand extends BaseCommand
                 InputArgument::IS_ARRAY,
                 ''
             );
-
-        $this->setRequiredOptions([
-            'project' => [
-                'question' => 'Choose a project: ',
-                'options' => function () {
-                    return $this->kbize->getProjects();
-                }
-            ],
-            'board' => [
-                'question' => 'Choose the board id: ',
-                'options' => function () {
-                    return$this->kbize->getBoards($this->input->getOption('project'));
-                }
-            ],
-        ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
