@@ -14,13 +14,13 @@ use KbizeCli\Console\Command\BaseCommand;
 /**
  *
  */
-class TasksCommand extends BaseCommand
+class TaskListCommand extends BaseCommand
 {
     protected function configure()
     {
         parent::configure();
 
-        $this->setName('tasks')
+        $this->setName('task:list')
             ->setDescription('Show a list of tasks')
             ->setHelp('This is the help for the tasks command.')
             ->addOption(
