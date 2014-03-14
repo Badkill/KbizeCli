@@ -84,27 +84,50 @@ abstract class BaseCommand extends Command
     {
         foreach ($this->requireOptions as $key => $data) {
             $output->writeln('');
-            $options = is_callable($data['options']) ? $data['options']() : $data['options'];
-
-            if (!is_null($currentChoice = $input->getOption($key, null))) {
-                if (in_array($currentChoice, array_keys($options))) {
-                    continue;
-                }
-                // TODO:! show the error even if the available choices is only one
-            }
-
-            $this->input->setOption($key, $this->chooseBetweenMultipleOptions(
-                $data['question'],
-                $options,
-                function($choice) use ($options, $key) {
-                    if (!in_array($choice, array_keys($options))) {
-                        throw new \InvalidArgumentException('`' . $choice . '` is an invalid ' . $key);
-                    }
-
-                    return $choice;
-                }
-            ));
+            $this->askMissingRequiredOption($key, $data, $input, $output);
         }
+    }
+
+    protected function askMissingRequiredOption(
+        $optionKey,
+        array $data,
+        InputInterface $input,
+        OutputInterface $output
+    )
+    {
+        $options = is_callable($data['options']) ? $data['options']() : $data['options'];
+        $currentChoice = $input->getOption($optionKey, null);
+
+        if (!is_null($currentChoice)) {
+            if ($this->isValidOptionValue($currentChoice, $options)) {
+                return;
+            }
+            // TODO:! show the error even if the available choices is only one
+        }
+
+        $this->input->setOption($optionKey, $this->chooseBetweenMultipleOptions(
+            $data['question'],
+            $options,
+            function ($choice) use ($options, $optionKey) {
+                return $this->ensureIsValidChoice($choice, $options, $optionKey);
+            }
+        ));
+    }
+
+    protected function ensureIsValidChoice($choice, $options, $optionKey)
+    {
+        if (!$this->isValidOptionValue($choice, $options)) {
+            throw new \InvalidArgumentException(
+                '`' . $choice . '` is an invalid ' . $optionKey
+            );
+        }
+
+        return $choice;
+    }
+
+    protected function isValidOptionValue($value, $options)
+    {
+        return in_array($value, array_keys($options));
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -124,7 +147,11 @@ abstract class BaseCommand extends Command
         $this->addFilterInCaseOwnOptionIsPresent($input);
     }
 
-    protected function chooseBetweenMultipleOptions($question, array $options, callable $validation) //FIXME:! RENAME IT
+    protected function chooseBetweenMultipleOptions(
+        $question, array
+        $options,
+        callable $validation
+    )
     {
         $defaultChoice = array_keys($options)[0];
 
@@ -138,7 +165,13 @@ abstract class BaseCommand extends Command
         }
         $outputQuestion[] = "<question>$question</question> [<comment>$defaultChoice</comment>] ";
 
-        $choice = $this->getHelper('dialog')->askAndValidate($this->output, $outputQuestion, $validation, 3, $defaultChoice);
+        $choice = $this->getHelper('dialog')->askAndValidate(
+            $this->output,
+            $outputQuestion,
+            $validation,
+            3,
+            $defaultChoice
+        );
 
         return $choice;
     }
