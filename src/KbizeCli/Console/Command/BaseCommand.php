@@ -11,8 +11,10 @@ use KbizeCli\Application;
 /**
  * Base command
  */
-abstract class BaseCommand extends Command implements Questioner
+abstract class BaseCommand extends Command
 {
+    protected $requiredOptions;
+
     protected function configure()
     {
         $this->addOption(
@@ -51,18 +53,16 @@ abstract class BaseCommand extends Command implements Questioner
         ]);
     }
 
-    protected $requiredOptions;
-
-    public function ask($question, $default = '', $hiddenResponse = false)
-    {
-        $dialog = $this->getHelperSet()->get('dialog');
-        $method = $hiddenResponse ? 'askHiddenResponse' : 'ask';
-        return $dialog->$method(
-            $this->output,
-            $question,
-            $default
-        );
-    }
+    /* public function ask($question, $default = '', $hiddenResponse = false) */
+    /* { */
+    /*     $dialog = $this->getHelperSet()->get('dialog'); */
+    /*     $method = $hiddenResponse ? 'askHiddenResponse' : 'ask'; */
+    /*     return $dialog->$method( */
+    /*         $this->output, */
+    /*         $question, */
+    /*         $default */
+    /*     ); */
+    /* } */
 
     public function error($message)
     {
@@ -112,7 +112,7 @@ abstract class BaseCommand extends Command implements Questioner
         $input->setInteractive(true);
         $this->input = $input;
         $this->output = $output;
-        $this->kbize = new Application($input->getOption('env'), $this, $output);
+        $this->kbize = new Application($input->getOption('env'), $output);
         if (!$this->kbize->isAuthenticated()) {
             $this->login();
         }
@@ -157,7 +157,7 @@ abstract class BaseCommand extends Command implements Questioner
             $this->output,
             'Please insert your Kanbanize email: ',
             function ($email) use ($dialog, $password) {
-                //FIXME:!
+
                 $password = $dialog->ask(//HiddenResponse(
                     $this->output,
                     '*************************************************************************************

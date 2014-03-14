@@ -12,13 +12,11 @@ use KbizeCli\Sdk\Exception\ForbiddenException;
 class Application
 {
     private $env;
-    private $questioner;
     private $output;
 
-    public function __construct($env = 'prod', Questioner $questioner, $output)
+    public function __construct($env = 'prod', $output)
     {
         $this->env = $env;
-        $this->questioner = $questioner;
         $this->output = $output;
 
         // create and populate the container
@@ -39,9 +37,9 @@ class Application
 
     public function __call($method, $args)
     {
-        /* return $this->retryOnForbiddenException(function () use ($method, $args) { */
+        return $this->retryOnForbiddenException(function () use ($method, $args) {
             return call_user_func_array([$this->kbize, $method], $args);
-        /* }); */
+        });
     }
 
     public function getContainer()
@@ -65,18 +63,19 @@ class Application
 
     private function authenticate()
     {
-        $email = $this->questioner->ask('
-Please insert your Kanbanize email: ');
-        $password = $this->questioner->ask(
-            '*************************************************************************************
-ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
-*************************************************************************************
-Please insert your password: ',
-            '',
-            true
-        );
+        throw new \RuntimeException('Implement me');
+        /* $email = $this->questioner->ask(' */
+/* Please insert your Kanbanize email: '); */
+        /* $password = $this->questioner->ask( */
+        /*     '************************************************************************************* */
+/* ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token. */
+/* ************************************************************************************* */
+/* Please insert your password: ', */
+        /*     '', */
+        /*     true */
+        /* ); */
 
-        $this->kbize->login($email, $password);
+        /* $this->kbize->login($email, $password); */
     }
 
     private function renderException($e, $output)
