@@ -83,8 +83,6 @@ class Cli
             2 => array("pipe", "w") // stderr is a file to write to
         );
 
-        $cwd = '/dati/progett/workspace_danilo/kbizeCli';
-
         $input = implode($this->inputs, "\n");
         $options = "";
         foreach ($this->options as $key => $value) {
@@ -92,7 +90,7 @@ class Cli
         }
 
         $command = "php run.php $this->command $options";
-        $process = proc_open($command, $descriptorspec, $pipes, $cwd);
+        $process = proc_open($command, $descriptorspec, $pipes);
 
         if (is_resource($process)) {
 
