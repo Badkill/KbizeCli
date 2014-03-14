@@ -70,7 +70,7 @@ class OrMatcherStrategy extends MatcherStrategy
 
 abstract class MatcherStrategy
 {
-    abstract function match($collection, $filters);
+    abstract public function match($collection, $filters);
 
     protected function collectionMatch($collection, $filter)
     {
