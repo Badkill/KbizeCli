@@ -21,6 +21,7 @@ class Cli
         $this->inputStream = $this->inputStream();
         $this->application = $this->application();
         $this->options['--env'] = 'test';
+        $this->options['--no-ansi'] = true;
     }
 
     public function getInputStream()
@@ -35,7 +36,7 @@ class Cli
 
     public function command($command)
     {
-        $this->command = $this->application->find($command);
+        $this->command = $command;
 
         return $this;
     }
@@ -90,7 +91,7 @@ class Cli
             $options .= " $key $value";
         }
 
-        $command = "php run.php tasks --no-ansi $options";
+        $command = "php run.php $this->command $options";
         $process = proc_open($command, $descriptorspec, $pipes, $cwd);
 
         if (is_resource($process)) {

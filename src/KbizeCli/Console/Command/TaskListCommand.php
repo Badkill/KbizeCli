@@ -16,6 +16,8 @@ use KbizeCli\Console\Command\BaseCommand;
  */
 class TaskListCommand extends BaseCommand
 {
+    const BLOCKED_COLOR = "\e[31m";
+
     protected function configure()
     {
         parent::configure();
@@ -50,24 +52,35 @@ class TaskListCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->container = $this->kbize->getContainer();
+
         $filters = $input->getArgument('filters');
 
-        $container = $this->kbize->getContainer();
-
-        $fieldsToDisplay = $this->fieldsToDisplay($container, $input->getOption('short', false));
         $taskCollection = $this->kbize->getAllTasks($input->getOption('board'));
 
         if (end($filters) == "show") {
-            array_pop($filters);
-            foreach ($taskCollection->filter($filters) as $task) {
-                $this->showTask($task, $output);
-                $output->writeln('');
-                $output->writeln('');
-            }
-
-            return;
+            $this->showTasks($taskCollection, $filters);
+        } else {
+            $this->showList($taskCollection, $filters, $input);
         }
+    }
 
+    private function showTasks($taskCollection, array $filters)
+    {
+        array_pop($filters);
+        foreach ($taskCollection->filter($filters) as $task) {
+            $this->showTask($task, $this->output);
+            $this->output->writeln('');
+            $this->output->writeln('');
+        }
+    }
+
+    private function showList($taskCollection, array $filters)
+    {
+        $fieldsToDisplay = $this->fieldsToDisplay(
+            $this->container,
+            $this->input
+        );
 
         $table = $this->getHelper('alternate-table')
             ->setLayout(TableHelper::LAYOUT_BORDERLESS)
@@ -82,7 +95,7 @@ class TaskListCommand extends BaseCommand
                 $fieldsToDisplay
             ));
 
-        $table->render($output);
+        $table->render($this->output);
     }
 
     private function headers(array $fieldsToDisplay)
@@ -102,9 +115,10 @@ class TaskListCommand extends BaseCommand
         $rows = [];
 
         foreach ($taskCollection->filter($filters) as $task) {
+            $color = $task['blocked'] ? 'red' : '';
             $row = [];
             foreach ($fieldsToDisplay as $field) {
-                $row[] = $task[$field];
+                $row[] = $this->color($task[$field], $color);
             }
 
             $rows[] = $row;
@@ -116,7 +130,8 @@ class TaskListCommand extends BaseCommand
     private function color($string, $color = "")
     {
         if ($color) {
-            return "<fg=$color>$string</fg=$color>";
+            /* return "<fg=$color>$string</fg=$color>"; */ ///fgcColor reset all style attributes
+            return "{$color}{$string}\e[39m";
         }
 
         return $string;
@@ -131,8 +146,10 @@ class TaskListCommand extends BaseCommand
         return $field;
     }
 
-    private function fieldsToDisplay($container, $short = false)
+    private function fieldsToDisplay($container, $input)
     {
+        $short = $input->getOption('short', false);
+
         $displaySettings = $container->getParameter('display');
         return $displaySettings[$short ? 'tasks.shortlist' : 'tasks.longlist'];
     }
@@ -142,17 +159,17 @@ class TaskListCommand extends BaseCommand
         $rows = [];
         foreach ($task as $field => $value) {
             if (is_array($value)) {
+                //TODO:!!
                 continue;
             }
-            $rows[] = [$field, $value];
+
+            $color = strstr($field, 'blocked') !== false && $value ? self::BLOCKED_COLOR : '';
+            $rows[] = [$field, $this->color($value, $color)];
         }
 
         $table = $this->getHelper('alternate-table')
             ->setLayout(TableHelper::LAYOUT_BORDERLESS)
             ->setCellRowContentFormat('%s ');
-            /* ->setCellRowContentFormat('<bg=black>%s </bg=black>'); */
-            /* ->setBorderFormat(' ') */
-            /* ->setCellHeaderFormat('<options=underscore>%s</options=underscore>'); */
 
         $table
             ->setHeaders(['Name', 'Value'])

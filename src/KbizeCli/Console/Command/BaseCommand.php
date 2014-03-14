@@ -157,6 +157,7 @@ abstract class BaseCommand extends Command implements Questioner
             $this->output,
             'Please insert your Kanbanize email: ',
             function ($email) use ($dialog, $password) {
+                //FIXME:!
                 $password = $dialog->ask(//HiddenResponse(
                     $this->output,
                     '*************************************************************************************
