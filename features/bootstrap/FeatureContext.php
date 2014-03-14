@@ -86,7 +86,7 @@ class FeatureContext extends BehatContext
      */
     public function iWantToViewTasksList()
     {
-        $this->client->command('tasks');
+        $this->client->command('task:list');
     }
 
     /**
