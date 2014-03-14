@@ -9,6 +9,7 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use KbizeCli\Tests\Integration\Client;
+use KbizeCli\Tests\Integration\Cli;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -45,7 +46,8 @@ class FeatureContext extends BehatContext
       */
     public function createClient(ScenarioEvent $event)
     {
-        $this->client = new Client();
+        /* $this->client = new Client(); */
+        $this->client = new Cli();
     }
 
     /**
@@ -89,6 +91,7 @@ class FeatureContext extends BehatContext
 
     /**
      * @Then /^I should insert [^"]* "([^"]*)"$/
+     * @Then /^I insert [^"]* "([^"]*)"$/
      */
     public function iShouldInsertBoardid($input)
     {
@@ -118,6 +121,7 @@ class FeatureContext extends BehatContext
      */
     public function theClientHasNoMoreInput()
     {
+        throw new PendingException();
         $this->client->ensureIsEmpty();
     }
 
