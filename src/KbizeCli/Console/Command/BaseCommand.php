@@ -93,7 +93,7 @@ abstract class BaseCommand extends Command
                 // TODO:! show the error even if the available choices is only one
             }
 
-            $this->input->setOption($key, $this->askForMultipleOptions(
+            $this->input->setOption($key, $this->chooseBetweenMultipleOptions(
                 $data['question'],
                 $options,
                 function($choice) use ($options, $key) {
@@ -124,7 +124,7 @@ abstract class BaseCommand extends Command
         $this->addFilterInCaseOwnOptionIsPresent($input);
     }
 
-    protected function askForMultipleOptions($question, array $options, callable $validation) //FIXME:! RENAME IT
+    protected function chooseBetweenMultipleOptions($question, array $options, callable $validation) //FIXME:! RENAME IT
     {
         $defaultChoice = array_keys($options)[0];
 
