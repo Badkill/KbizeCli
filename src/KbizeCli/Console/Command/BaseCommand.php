@@ -14,6 +14,7 @@ use KbizeCli\Application;
 abstract class BaseCommand extends Command
 {
     protected $requiredOptions;
+    protected $isInteractive = true;
 
     protected function configure()
     {
@@ -53,17 +54,6 @@ abstract class BaseCommand extends Command
         ]);
     }
 
-    /* public function ask($question, $default = '', $hiddenResponse = false) */
-    /* { */
-    /*     $dialog = $this->getHelperSet()->get('dialog'); */
-    /*     $method = $hiddenResponse ? 'askHiddenResponse' : 'ask'; */
-    /*     return $dialog->$method( */
-    /*         $this->output, */
-    /*         $question, */
-    /*         $default */
-    /*     ); */
-    /* } */
-
     public function error($message)
     {
         $formatter = $this->output->getFormatter();
@@ -102,6 +92,8 @@ abstract class BaseCommand extends Command
             if ($this->isValidOptionValue($currentChoice, $options)) {
                 return;
             }
+
+            $output->writeln("<error>`$currentChoice` is invalid value for $optionKey</error>");
             // TODO:! show the error even if the available choices is only one
         }
 
@@ -132,10 +124,11 @@ abstract class BaseCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $input->setInteractive(true);
         $this->input = $input;
         $this->output = $output;
-        $this->kbize = new Application($input->getOption('env'), $output);
+        $this->env = $input->getOption('env');
+        $this->envConfiguration();
+        $this->kbize = new Application($this->env, $output);
         if (!$this->kbize->isAuthenticated()) {
             $this->login();
         }
@@ -145,6 +138,16 @@ abstract class BaseCommand extends Command
         }
 
         $this->addFilterInCaseOwnOptionIsPresent($input);
+    }
+
+    protected function envConfiguration()
+    {
+        $this->isInteractive = $this->input->isInteractive();
+        switch ($this->env) {
+        case "test":
+            $this->input->setInteractive(true);
+            break;
+        }
     }
 
     protected function chooseBetweenMultipleOptions(
@@ -190,13 +193,15 @@ abstract class BaseCommand extends Command
             $this->output,
             'Please insert your Kanbanize email: ',
             function ($email) use ($dialog, $password) {
-
-                $password = $dialog->ask(//HiddenResponse(
+                // In test environment askHiddenResponse does not work
+                // because it calls system command.
+                $method = $this->isInteractive ? 'askHiddenResponse' : 'ask'; // FIXME:! overwrite dialog helper in test environment
+                $password = $dialog->$method(
                     $this->output,
                     '*************************************************************************************
-                    ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
-                    *************************************************************************************
-                    Please insert your password: '
+ATTENTION: your password will NOT be saved, will be used a Kanbanize generated token.
+*************************************************************************************
+Please insert your password: '
                 );
 
                 $user = $this->kbize->login($email, $password);
