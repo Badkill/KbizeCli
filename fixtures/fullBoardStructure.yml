@@ -1,0 +1,93 @@
+columns:
+    -
+        position: 0
+        lcname: "Backlog"
+        section: "backlog"
+        path: "backlog_5"
+        description: ""
+        lcid: "5"
+    -
+        position: "1"
+        lcname: "Selected"
+        section: "requested"
+        path: "requested_12"
+        description: ""
+        lcid: "12"
+    -
+        position: "2"
+        lcname: "Ongoing"
+        section: "progress"
+        path: "progress_2"
+        description: ""
+        lcid: "2"
+    -
+        position: "3"
+        lcname: "Tech Review"
+        section: "progress"
+        path: "progress_13"
+        description: ""
+        lcid: "13"
+    -
+        position: "4"
+        lcname: "In Production"
+        section: "progress"
+        path: "progress_14"
+        description: ""
+        lcid: "14"
+    -
+        position: "5"
+        lcname: "Customer Approval"
+        section: "progress"
+        path: "progress_15"
+        description: ""
+        lcid: "15"
+    -
+        position: "6"
+        lcname: "Live"
+        section: "done"
+        path: "done_3"
+        description: ""
+        lcid: "3"
+    -
+        position: 0
+        lcname: "Archive"
+        section: "archive"
+        path: "archive_6"
+        description: ""
+        lcid: "6"
+lanes:
+    -
+        position: "0"
+        lcname: "Subeng"
+        path: "lane_4"
+        description: ""
+        lcid: "4"
+        color: "#FFFFFF"
+    -
+        position: "1"
+        lcname: "Clean Code"
+        path: "lane_7"
+        description: ""
+        lcid: "7"
+        color: "#FFFFFF"
+    -
+        position: "2"
+        lcname: "Core"
+        path: "lane_8"
+        description: ""
+        lcid: "8"
+        color: "#FFFFFF"
+    -
+        position: "3"
+        lcname: "Backend"
+        path: "lane_9"
+        description: ""
+        lcid: "9"
+        color: "#FFFFFF"
+    -
+        position: "4"
+        lcname: "Connectivity"
+        path: "lane_10"
+        description: ""
+        lcid: "10"
+        color: "#FFFFFF"

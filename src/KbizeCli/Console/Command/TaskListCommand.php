@@ -16,7 +16,6 @@ use KbizeCli\Console\Command\BaseCommand;
  */
 class TaskListCommand extends BaseCommand
 {
-    /* const BLOCKED_COLOR = "\e[31m"; */
     const BLOCKED_COLOR = 'red';
 
     protected function configure()
@@ -53,6 +52,8 @@ class TaskListCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->addFilterInCaseOwnOptionIsPresent($input);
+
         $this->container = $this->kbize->getContainer();
 
         $filters = $input->getArgument('filters');
@@ -176,5 +177,14 @@ class TaskListCommand extends BaseCommand
             ->setRows($rows);
 
         $table->render($output);
+    }
+
+    private function addFilterInCaseOwnOptionIsPresent(InputInterface $input)
+    {
+        if ($input->getOption('own')) {
+            $filters = $input->getArgument('filters');
+            array_unshift($filters, 'assignee=' . $this->kbize->getUser()->username);
+            $input->setArgument('filters', $filters);
+        }
     }
 }

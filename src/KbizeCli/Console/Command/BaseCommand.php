@@ -73,7 +73,6 @@ abstract class BaseCommand extends Command
     protected function askMissingRequiredOptions(InputInterface $input, OutputInterface $output)
     {
         foreach ($this->requireOptions as $key => $data) {
-            $output->writeln('');
             $this->askMissingRequiredOption($key, $data, $input, $output);
         }
     }
@@ -136,8 +135,6 @@ abstract class BaseCommand extends Command
         if ($input->getOption('no-cache')) {
             $this->kbize->clearCache(false);
         }
-
-        $this->addFilterInCaseOwnOptionIsPresent($input);
     }
 
     protected function envConfiguration()
@@ -176,6 +173,8 @@ abstract class BaseCommand extends Command
             $defaultChoice
         );
 
+        $this->output->writeln('');
+
         return $choice;
     }
 
@@ -208,14 +207,5 @@ Please insert your password: '
                 $user = $this->kbize->login($email, $password);
             }
         );
-    }
-
-    private function addFilterInCaseOwnOptionIsPresent(InputInterface $input)
-    {
-        if ($input->getOption('own')) {
-            $filters = $input->getArgument('filters');
-            array_unshift($filters, 'assignee=' . $this->kbize->getUser()->username);
-            $input->setArgument('filters', $filters);
-        }
     }
 }
