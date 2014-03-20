@@ -1,6 +1,6 @@
 parameters:
-    path.data: 'data'
-    path.cache:  'data/cache'
+    path.data: '%path.project_home%'
+    path.cache:  '%path.project_home%/cache'
 
 services:
   httpClient:

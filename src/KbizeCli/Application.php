@@ -27,12 +27,38 @@ class Application
         $paths['root'] = __DIR__ . '/../../';
         $paths['config'] = $paths['root'] . 'app/config/kbize/';
         $this->container->setParameter('paths', $paths);
+        $this->container->setParameter('path.root', $paths['root']);
+        $this->container->setParameter('path.config', $paths['config']);
+        $this->container->setParameter('path.project_home', $_SERVER['HOME'] . DIRECTORY_SEPARATOR . '.kbize');
+        $this->container->setParameter(
+            'path.custom_config_file',
+            $this->container->getParameter('path.project_home') . DIRECTORY_SEPARATOR . 'config.yml'
+        );
 
         // the main config
         $loader = new YamlFileLoader($this->container, new FileLocator($paths['config']));
         $loader->load("config.$env.yml");
+        $this->initCustomEnvironment();
+        $this->container->getParameterBag()->resolve();
 
         $this->kbize = $this->container->get('kbize');
+    }
+
+    private function initCustomEnvironment()
+    {
+        $customConfigPath = $this->container->getParameter('path.project_home');
+        $customConfigFile  = $this->container->getParameter('path.custom_config_file');
+
+        if (!is_dir($customConfigPath)) {
+            mkdir($customConfigPath, 0755, true);
+        }
+
+        if (!is_file($customConfigFile)) {
+            copy('fixtures/config.yml', $customConfigFile);
+        }
+
+        $loader = new YamlFileLoader($this->container, new FileLocator($customConfigPath));
+        $loader->load(basename($customConfigFile));
     }
 
     public function __call($method, $args)

@@ -1,5 +1,5 @@
 parameters:
-    path.data: 'data/test'
-    path.cache:  'data/test/cache'
+    path.data:  '%path.project_home%/test'
+    path.cache: '%path.project_home%/test/cache'
 
 services:

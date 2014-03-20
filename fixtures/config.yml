@@ -1,0 +1,20 @@
+#parameters:
+#  api:
+#    baseUrl: https://www.kanbanize.com/index.php/api/kanbanize
+
+
+#  display:
+#    tasks.longlist:
+#      - taskid
+#      - assignee
+#      - priority
+#      - lanename
+#      - columnname
+#      - title
+
+#    tasks.shortlist:
+#      - taskid
+#      - assignee
+#      - lanename
+#      - columnname
+#      - title
