@@ -13,7 +13,7 @@ $app->post('/login', function (Request $request) {
     $inputs = json_decode($request->getContent(), true);
     if (
         $inputs['email'] == 'name.surname@email.com' &&
-        $inputs['pass']  == 'secretpassword'
+        $inputs['pass']  == 'secret'
     ) {
         $userData = [
             'email' => 'name.surname@email.com',
