@@ -193,9 +193,10 @@ abstract class BaseCommand extends Command
             $this->output,
             'Please insert your Kanbanize email: ',
             function ($email) use ($dialog, $password) {
-                // In test environment askHiddenResponse does not work
+                // In test environment, with a non interactive input,
+                // askHiddenResponse does not work
                 // because it calls system command.
-                $method = $this->isInteractive ? 'askHiddenResponse' : 'ask'; // FIXME:! overwrite dialog helper in test environment
+                $method = $this->isInteractive ? 'askHiddenResponse' : 'ask';
                 $password = $dialog->$method(
                     $this->output,
                     '*************************************************************************************

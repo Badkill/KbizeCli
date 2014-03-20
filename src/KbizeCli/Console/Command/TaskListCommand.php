@@ -16,7 +16,8 @@ use KbizeCli\Console\Command\BaseCommand;
  */
 class TaskListCommand extends BaseCommand
 {
-    const BLOCKED_COLOR = "\e[31m";
+    /* const BLOCKED_COLOR = "\e[31m"; */
+    const BLOCKED_COLOR = 'red';
 
     protected function configure()
     {
@@ -115,7 +116,7 @@ class TaskListCommand extends BaseCommand
         $rows = [];
 
         foreach ($taskCollection->filter($filters) as $task) {
-            $color = $task['blocked'] ? 'red' : '';
+            $color = $task['blocked'] ? self::BLOCKED_COLOR : '';
             $row = [];
             foreach ($fieldsToDisplay as $field) {
                 $row[] = $this->color($task[$field], $color);
@@ -130,8 +131,8 @@ class TaskListCommand extends BaseCommand
     private function color($string, $color = "")
     {
         if ($color) {
-            /* return "<fg=$color>$string</fg=$color>"; */ ///fgcColor reset all style attributes
-            return "{$color}{$string}\e[39m";
+            return "<fg=$color>$string</fg=$color>"; //fgcColor reset all style attributes
+            /* return "{$color}{$string}\e[39m"; */
         }
 
         return $string;
