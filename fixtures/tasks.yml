@@ -44,8 +44,8 @@
     columnid: progress_15
     laneid: '10'
     leadtime: 32
-    blocked: '0'
-    blockedreason: null
+    blocked: '1'
+    blockedreason: 'Ultimate api for passive billing'
     subtaskdetails: {  }
     columnname: 'Customer Approval'
     lanename: Connectivity
@@ -71,8 +71,8 @@
     columnid: progress_2
     laneid: '10'
     leadtime: 32
-    blocked: '1'
-    blockedreason: 'Ultimate api for passive billing'
+    blocked: '0'
+    blockedreason: null
     subtaskdetails: {  }
     columnname: Ongoing
     lanename: Connectivity
