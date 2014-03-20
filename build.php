@@ -28,6 +28,7 @@ echo sprintf('Building "%s" version "%s" into "%s"'."\n", $buildTarget, $vm->get
 
 // remove old
 @unlink($output);
+@unlink($output.'.gz');
 
 // start phar creation
 $phar = new \Phar($output);
