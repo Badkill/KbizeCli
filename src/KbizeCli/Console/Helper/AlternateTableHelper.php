@@ -416,7 +416,7 @@ class AlternateTableHelper extends Helper
         }
 
         if ($color) {
-            $this->output->writeln("\e[0m");
+            $this->output->writeln("\e[49m");
         } else {
             $this->output->writeln('');
         }

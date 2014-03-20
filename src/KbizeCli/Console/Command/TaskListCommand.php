@@ -131,8 +131,7 @@ class TaskListCommand extends BaseCommand
     private function color($string, $color = "")
     {
         if ($color) {
-            return "<fg=$color>$string</fg=$color>"; //fgcColor reset all style attributes
-            /* return "{$color}{$string}\e[39m"; */
+            return "<fg=$color>$string</fg=$color>";
         }
 
         return $string;
