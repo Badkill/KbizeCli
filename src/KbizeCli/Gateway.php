@@ -73,6 +73,14 @@ class Gateway implements KbizeInterface
         return TaskCollection::box($tasks);
     }
 
+    public function getBoardStructure($boardId, $useCache = true)
+    {
+        $cacheFile = $useCache ? $boardId . DIRECTORY_SEPARATOR . 'boardStructure.yml' : null;
+        $boardStructure = $this->callSdkWithCache('getBoardStructure', [$boardId], $cacheFile);
+
+        return $boardStructure;
+    }
+
     public function callSdk($method, array $args = [])
     {
         return call_user_func_array([$this->sdk, $method], $args);

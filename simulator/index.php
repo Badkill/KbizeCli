@@ -65,4 +65,16 @@ $app->post('/get_all_tasks', function (Request $request) use ($app) {
     return $app->json($tasks, 200);
 });
 
+$app->post('/get_full_board_structure', function (Request $request) use ($app) {
+    $inputs = json_decode($request->getContent(), true);
+    if ($inputs['boardid'] != '2') {
+        return new Response('Board ' . $inputs['boardid'] . ' not exists', 400);
+    }
+
+    $yamlParser = new Parser();
+    $tasks = $yamlParser->parse(file_get_contents('../fixtures/fullBoardStructure.yml'));
+
+    return $app->json($tasks, 200);
+});
+
 $app->run();

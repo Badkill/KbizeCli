@@ -117,6 +117,23 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $sdk->getProjectsAndBoards());
     }
 
+    public function testGetBoardStructure()
+    {
+        $data = [
+            'foo' => 'bar'
+        ];
+
+        $this->requestReturnsJson($data);
+
+        $this->clientExpectation('get_full_board_structure', [
+            'boardid' => 42,
+        ], $this->request);
+
+        $sdk = new Sdk($this->client);
+        $sdk->setApikey($this->apikey);
+        $this->assertEquals($data, $sdk->getBoardStructure(42));
+    }
+
     /**
      * @expectedException \KbizeCli\Sdk\Exception\ForbiddenException
      */

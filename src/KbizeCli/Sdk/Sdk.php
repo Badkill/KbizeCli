@@ -39,12 +39,16 @@ class Sdk implements SdkInterface
 
     public function getBoardStructure($boardId)
     {
-
+        return $this->getFullBoardStructure($boardId);
     }
 
     public function getFullBoardStructure($boardId)
     {
+        $request = $this->post('get_full_board_structure', [
+            'boardid' => $boardId,
+        ]);
 
+        return $this->send($request);
     }
 
     public function getBoardSettings($boardId)

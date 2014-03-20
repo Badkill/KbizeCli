@@ -84,6 +84,32 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(TaskCollection::box($cachedData), $this->gw->getAllTasks($boardId));
     }
 
+    public function testGetBoardStructureAndWriteOnCacheIfCacheIsEmpty()
+    {
+        $boardId = 42;
+        $this->cacheFile = $this->cachePath . DIRECTORY_SEPARATOR .
+            $boardId . DIRECTORY_SEPARATOR . 'boardStructure.yml';
+        $data = [
+            'foo' => 'bar',
+        ];
+
+        $this->sdk->expects($this->once())
+            ->method('getBoardStructure')
+            ->with($boardId)
+            ->will($this->returnValue($data));
+
+        $this->cache->expects($this->once())
+            ->method('read')
+            ->with($this->cacheFile)
+            ->will($this->returnValue([]));
+
+        $this->cache->expects($this->once())
+            ->method('write')
+            ->with($this->cacheFile, $data);
+
+        $this->assertEquals($data, $this->gw->getBoardStructure($boardId));
+    }
+
 
     /* /** */
     /*  * @expectedException KbizeCli\Sdk\Exception\ForbiddenException */
