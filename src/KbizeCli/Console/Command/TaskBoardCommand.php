@@ -10,6 +10,7 @@ use Symfony\Component\Console\Helper\TableHelper;
 use KbizeCli\Application;
 use KbizeCli\TaskCollection;
 use KbizeCli\Console\Command\BaseCommand;
+use \Symfony\Component\Console\Application as SymfonyApplication;
 
 /**
  *
@@ -17,6 +18,13 @@ use KbizeCli\Console\Command\BaseCommand;
 class TaskBoardCommand extends BaseCommand
 {
     const BLOCKED_COLOR = 'red';
+    private $maxColumnSize;
+
+    public function __construct($name, SymfonyApplication $app)
+    {
+        $this->app = $app;
+        parent::__construct($name);
+    }
 
     protected function configure()
     {
@@ -36,9 +44,14 @@ class TaskBoardCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $boardId = $input->getOption('board');
+
         $this->container = $this->kbize->getContainer();
+
         $boardStructure = $this->kbize->getBoardStructure($boardId);
         $taskCollection = $this->kbize->getAllTasks($boardId);
+
+        $this->maxColumnSize = $this->getMaxColumnSize(count($boardStructure['columns']));
+
         $this->showBoard($boardStructure, $taskCollection);
     }
 
@@ -57,7 +70,7 @@ class TaskBoardCommand extends BaseCommand
     {
         $headers = [];
         foreach($boardStructure['columns'] as $column) {
-            $headers[] = $column['lcname'];
+            $headers[] = $this->formatString($column['lcname']);
         }
 
         return $headers;
@@ -66,7 +79,6 @@ class TaskBoardCommand extends BaseCommand
     private function rows($boardStructure, $taskCollection)
     {
         $organizedTask = $this->organizeTask($boardStructure, $taskCollection);
-
 
         $rows = [];
         foreach ($boardStructure['lanes'] as $lane) {
@@ -77,9 +89,13 @@ class TaskBoardCommand extends BaseCommand
                 foreach ($boardStructure['columns'] as $column) {
                     if (isset($laneTasks[$column['path']]) && $laneTasks[$column['path']]) {
                         $task = array_shift($laneTasks[$column['path']]);
-                        $row[] = $task['taskid'] . ' ' . substr($task['title'], 0, 20);
+                        $color = $task['blocked'] ? self::BLOCKED_COLOR : null;
+                        $row[] = $this->formatString(
+                            $task['taskid'] . ' ' . $task['title'],
+                            $color
+                        );
                     } else {
-                        $row[] = '';
+                        $row[] = $this->formatString('');
                     }
                 }
                 $rows[] = $row;
@@ -107,12 +123,31 @@ class TaskBoardCommand extends BaseCommand
         return $organized;
     }
 
-    private function color($string, $color = "")
+    private function formatString($string, $color = false)
     {
+        $string = str_pad(
+            substr($string, 0, $this->maxColumnSize),
+            $this->maxColumnSize,
+            ' '
+        );
+
         if ($color) {
             return "<fg=$color>$string</fg=$color>";
         }
 
         return $string;
+    }
+
+    private function getMaxColumnSize($nColumns)
+    {
+        $terminalDimensions = $this->app->getTerminalDimensions();
+        $terminalWidth = $terminalDimensions[0];
+        $separatorDImension = ($nColumns * 3) +1;
+
+        $size = floor(($terminalWidth - $separatorDImension ) / $nColumns);
+
+        echo $terminalWidth . "\n";
+        echo $size . "\n";
+        return $size;
     }
 }

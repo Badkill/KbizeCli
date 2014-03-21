@@ -77,7 +77,7 @@ class Application extends \Symfony\Component\Console\Application
                             $className = $file->getBasename('.php'); // strip .php extension
                             $r = new \ReflectionClass($baseNamespaceName . '\Console\Command' . '\\' . $className);
                             if (!$r->isAbstract()) {
-                                $this->add($r->newInstance());
+                                $this->add($r->newInstance(null, $this));
                             }
                         }
                     }
