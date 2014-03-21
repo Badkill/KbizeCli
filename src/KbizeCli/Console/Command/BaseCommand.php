@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use KbizeCli\Questioner;
 use KbizeCli\Application;
+use \Symfony\Component\Console\Application as SymfonyApplication;
 
 /**
  * Base command
@@ -15,6 +16,12 @@ abstract class BaseCommand extends Command
 {
     protected $requiredOptions;
     protected $isInteractive = true;
+
+    public function __construct($name, SymfonyApplication $app)
+    {
+        $this->app = $app;
+        parent::__construct($name);
+    }
 
     protected function configure()
     {

@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\TableHelper;
 use KbizeCli\Application;
 use KbizeCli\TaskCollection;
+use KbizeCli\Console\String;
 use KbizeCli\Console\Command\BaseCommand;
 
 /**
@@ -129,13 +130,10 @@ class TaskListCommand extends BaseCommand
         return $rows;
     }
 
-    private function color($string, $color = "")
+    private function color($string, $color = false)
     {
-        if ($color) {
-            return "<fg=$color>$string</fg=$color>";
-        }
-
-        return $string;
+        return (new String($string))
+            ->color($color);
     }
 
     private function adjustNameField($field, array $fixes = [])

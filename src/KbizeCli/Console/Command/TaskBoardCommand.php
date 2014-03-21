@@ -10,7 +10,7 @@ use Symfony\Component\Console\Helper\TableHelper;
 use KbizeCli\Application;
 use KbizeCli\TaskCollection;
 use KbizeCli\Console\Command\BaseCommand;
-use \Symfony\Component\Console\Application as SymfonyApplication;
+use KbizeCli\Console\String;
 
 /**
  *
@@ -19,12 +19,6 @@ class TaskBoardCommand extends BaseCommand
 {
     const BLOCKED_COLOR = 'red';
     private $maxColumnSize;
-
-    public function __construct($name, SymfonyApplication $app)
-    {
-        $this->app = $app;
-        parent::__construct($name);
-    }
 
     protected function configure()
     {
@@ -125,17 +119,9 @@ class TaskBoardCommand extends BaseCommand
 
     private function formatString($string, $color = false)
     {
-        $string = str_pad(
-            substr($string, 0, $this->maxColumnSize),
-            $this->maxColumnSize,
-            ' '
-        );
-
-        if ($color) {
-            return "<fg=$color>$string</fg=$color>";
-        }
-
-        return $string;
+        return (new String($string))
+            ->fixed($this->maxColumnSize)
+            ->color($color);
     }
 
     private function getMaxColumnSize($nColumns)
@@ -144,10 +130,6 @@ class TaskBoardCommand extends BaseCommand
         $terminalWidth = $terminalDimensions[0];
         $separatorDImension = ($nColumns * 3) +1;
 
-        $size = floor(($terminalWidth - $separatorDImension ) / $nColumns);
-
-        echo $terminalWidth . "\n";
-        echo $size . "\n";
-        return $size;
+        return floor(($terminalWidth - $separatorDImension ) / $nColumns);
     }
 }
