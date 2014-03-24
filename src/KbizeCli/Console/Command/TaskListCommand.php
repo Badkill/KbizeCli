@@ -38,12 +38,6 @@ class TaskListCommand extends BaseCommand
                 InputOption::VALUE_NONE,
                 'Display only my own tasks'
             )
-            ->addOption(
-                'no-cache',
-                'x',
-                InputOption::VALUE_NONE,
-                'Do not use cached data'
-            )
             ->addArgument(
                 'filters',
                 InputArgument::IS_ARRAY,

@@ -43,6 +43,12 @@ abstract class BaseCommand extends Command
             'p',
             InputOption::VALUE_REQUIRED,
             'The ID of the project'
+        )
+        ->addOption(
+            'no-cache',
+            'x',
+            InputOption::VALUE_NONE,
+            'Do not use cached data'
         );
 
         $this->setRequiredOptions([
