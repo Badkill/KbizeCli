@@ -75,16 +75,17 @@ class Application
 
     private function retryOnForbiddenException(callable $call)
     {
-        while (true) {
-            try {
-                return $call();
-            } catch (ForbiddenException $e) {
-                $this->renderException($e, $this->output);
-                $this->retryOnForbiddenException(function () {
-                    return call_user_func([$this, 'authenticate']);
-                });
-            }
-        }
+        return $call();
+        /* while (true) { */
+        /*     try { */
+        /*         return $call(); */
+        /*     } catch (ForbiddenException $e) { */
+        /*         $this->renderException($e, $this->output); */
+        /*         $this->retryOnForbiddenException(function () { */
+        /*             return call_user_func([$this, 'authenticate']); */
+        /*         }); */
+        /*     } */
+        /* } */
     }
 
     private function authenticate()

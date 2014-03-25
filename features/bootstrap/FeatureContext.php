@@ -12,6 +12,7 @@ use KbizeCli\Tests\Integration\Client;
 use KbizeCli\Tests\Integration\Cli;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use KbizeCli\Application;
 
 //
 // Require 3rd-party libraries here:
@@ -34,10 +35,11 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-
         // Initialize your context here
+        $application = new Application('test', null);
+        $this->pathData = $application->getContainer()->getParameter('path.data');
         $fs = new Filesystem();
-        $fs->remove('data/test');
+        $fs->remove($this->pathData);
         $this->output = null;
     }
 
@@ -63,7 +65,7 @@ class FeatureContext extends BehatContext
      */
     public function iAmAnUnauthenticatedUser()
     {
-        $file = 'data/test/user.yml'; //FIXME:!!!
+        $file = $this->pathData . '/user.yml'; //FIXME:!!!
         if (file_exists($file)) {
             unlink($file);
         }
@@ -74,11 +76,11 @@ class FeatureContext extends BehatContext
      */
     public function iAmAnAuthenticatedUser()
     {
-        if (!is_dir('data/test')) {
-            mkdir ('data/test');
+        if (!is_dir($this->pathData)) {
+            mkdir ($this->pathData);
         }
 
-        copy('fixtures/user.yml', 'data/test/user.yml');
+        copy('fixtures/user.yml', $this->pathData . '/user.yml');
     }
 
     /**
