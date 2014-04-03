@@ -1,7 +1,7 @@
 <?php
 
 use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
+    Beha\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
     Behat\Behat\Event\ScenarioEvent,
     Behat\Behat\Exception\PendingException;
@@ -38,18 +38,28 @@ class FeatureContext extends BehatContext
         // Initialize your context here
         $application = new Application('test', null);
         $this->pathData = $application->getContainer()->getParameter('path.data');
+        error_log($this->pathData);
         $fs = new Filesystem();
         $fs->remove($this->pathData);
         $this->output = null;
     }
 
     /**
-      * @BeforeScenario
-      */
+     * @BeforeScenario
+     */
     public function createClient(ScenarioEvent $event)
     {
         /* $this->client = new Client(); */
-        $this->client = new Cli();
+        $this->client = new Cli($this);
+    }
+
+    /**
+     * @AfterScenario
+     */
+    public function cleanTmp()
+    {
+        $fs = new Filesystem();
+        $fs->remove(sys_get_temp_dir() . '/kbizeCliTmpData');
     }
 
     /**
@@ -89,6 +99,16 @@ class FeatureContext extends BehatContext
     public function iWantToViewTasksList()
     {
         $this->client->command('task:list');
+        $this->output = null;
+    }
+
+    /**
+     * @When /^I want to create a new tasks$/
+     */
+    public function iWantToCreateANewTasks()
+    {
+        $this->client->command('task:create');
+        $this->output = null;
     }
 
     /**
@@ -106,7 +126,7 @@ class FeatureContext extends BehatContext
     public function iShouldViewInTheOutput($text)
     {
         $output = $this->execute();
-        assertContains($text, $output);
+        assertRegExp('/' . $text . '/', $output);
     }
 
     /**
@@ -115,7 +135,7 @@ class FeatureContext extends BehatContext
     public function iShouldNotViewInTheOutput($text)
     {
         $output = $this->execute();
-        assertNotContains($text, $output);
+        assertNotRegExp('/' . $text . '/', $output);
     }
 
     /**
@@ -134,6 +154,14 @@ class FeatureContext extends BehatContext
     public function iUseTheOption($option, $value = true)
     {
         $this->client->addOption($option, $value);
+    }
+
+    /**
+     * @Given /^I\'m waiting task creation$/
+     */
+    public function iMWaitCreationOfTask()
+    {
+        sleep(2); //FIXME:!!!!
     }
 
     private function execute()

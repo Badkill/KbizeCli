@@ -11,8 +11,9 @@ class Cli
     private $options = [];
     private $inputs = [];
 
-    public function __construct()
+    public function __construct($outputWriter) //FIXME:! type hint
     {
+        $this->outputWriter = $outputWriter;
         $this->options['--env'] = 'test';
         $this->options['--no-ansi'] = true;
     }
@@ -70,6 +71,7 @@ class Cli
         }
 
         $command = "php run.php $this->command $options";
+        $this->outputWriter->printDebug("executing command: `$command`");
         $process = proc_open($command, $descriptorspec, $pipes);
 
         if (is_resource($process)) {

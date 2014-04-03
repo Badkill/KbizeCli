@@ -164,6 +164,35 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $sdk->getAllTasks($boardId));
     }
 
+    public function testCreationOfTask()
+    {
+        $boardId = 42;
+        $newTaskData = [
+            'title' => 'Test title',
+            'description' => 'Test description',
+        ];
+
+        $responseData = [
+            'id' => 10,
+        ];
+
+        $this->requestReturnsJson($responseData);
+
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('create_new_task', [
+                'Content-Type' => 'application/json'
+            ], json_encode(array_merge(
+                ['boardid' => $boardId],
+                $newTaskData
+            )))
+            ->will($this->returnValue($this->request));
+
+        $sdk = new Sdk($this->client);
+        $sdk->setApikey($this->apikey);
+        $this->assertEquals($responseData, $sdk->createNewTask($boardId, $newTaskData));
+    }
+
     private function clientExpectation($url, $data)
     {
         $this->client->expects($this->once())

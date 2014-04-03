@@ -28,6 +28,7 @@ class Request /*extends GuzzleEntityEnclosingRequest implements RequestInterface
     public function send()
     {
         try {
+            var_export($this->request->__toString());
             $guzzleResponse = $this->request->send();
         } catch (\Exception $e) {
             throw HttpException::from($e);

@@ -20,6 +20,7 @@ abstract class BaseCommand extends Command
     public function __construct($name, SymfonyApplication $app)
     {
         $this->app = $app;
+        $this->requireOptions = [];
         parent::__construct($name);
     }
 
@@ -61,7 +62,7 @@ abstract class BaseCommand extends Command
             'board' => [
                 'question' => 'Choose the board id: ',
                 'options' => function () {
-                    return$this->kbize->getBoards($this->input->getOption('project'));
+                    return $this->kbize->getBoards($this->input->getOption('project'));
                 }
             ],
         ]);
@@ -83,6 +84,11 @@ abstract class BaseCommand extends Command
         $this->requireOptions = $required;
     }
 
+    protected function addRequiredOptions(array $required)
+    {
+        $this->requireOptions = array_merge($this->requireOptions, $required);
+    }
+
     protected function askMissingRequiredOptions(InputInterface $input, OutputInterface $output)
     {
         foreach ($this->requireOptions as $key => $data) {
@@ -97,25 +103,45 @@ abstract class BaseCommand extends Command
         OutputInterface $output
     )
     {
-        $options = is_callable($data['options']) ? $data['options']() : $data['options'];
-        $currentChoice = $input->getOption($optionKey, null);
+        if (array_key_exists('options', $data)) {
+            $options = is_callable($data['options']) ? $data['options']() : $data['options'];
 
-        if (!is_null($currentChoice)) {
-            if ($this->isValidOptionValue($currentChoice, $options)) {
+            $currentChoice = $input->getOption($optionKey, null);
+
+            if (!is_null($currentChoice)) {
+                if ($this->isValidOptionValue($currentChoice, $options)) {
+                    return;
+                }
+
+                $output->writeln("<error>`$currentChoice` is invalid value for $optionKey</error>");
+                // TODO:! show the error even if the available choices is only one
+            }
+
+            $this->input->setOption($optionKey, $this->chooseBetweenMultipleOptions(
+                $data['question'],
+                $options,
+                function ($choice) use ($options, $optionKey, $data) {
+                    if (array_key_exists('validation', $data)) {
+                        $validation = $data['validation'];
+                        return $validation($choice, $options, $optionKey);
+                    }
+
+                    return $this->ensureIsValidChoice($choice, $options, $optionKey);
+                }
+            ));
+        } else {
+
+            $currentChoice = $input->getOption($optionKey, null);
+            if (!is_null($currentChoice)) {
                 return;
             }
 
-            $output->writeln("<error>`$currentChoice` is invalid value for $optionKey</error>");
-            // TODO:! show the error even if the available choices is only one
+            $this->input->setOption($optionKey, $this->getHelperSet()->get('dialog')
+                ->ask(
+                    $output,
+                    $data['question']
+                ));
         }
-
-        $this->input->setOption($optionKey, $this->chooseBetweenMultipleOptions(
-            $data['question'],
-            $options,
-            function ($choice) use ($options, $optionKey) {
-                return $this->ensureIsValidChoice($choice, $options, $optionKey);
-            }
-        ));
     }
 
     protected function ensureIsValidChoice($choice, $options, $optionKey)
@@ -160,11 +186,7 @@ abstract class BaseCommand extends Command
         }
     }
 
-    protected function chooseBetweenMultipleOptions(
-        $question, array
-        $options,
-        callable $validation
-    )
+    protected function chooseBetweenMultipleOptions($question, array $options, callable $validation)
     {
         $defaultChoice = array_keys($options)[0];
 

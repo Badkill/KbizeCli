@@ -110,6 +110,24 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $this->gw->getBoardStructure($boardId));
     }
 
+    public function testCreationOfTask()
+    {
+        $boardId = 42;
+        $parameters = [
+            'title' => 'Test Title',
+            'description' => 'Test description',
+        ];
+
+        $responseData = ['id' => '10'];
+
+        $this->sdk->expects($this->once())
+            ->method('createNewTask')
+            ->with($boardId, $parameters)
+            ->will($this->returnValue($responseData));
+
+        $this->assertEquals($responseData, $this->gw->createNewTask($boardId, $parameters));
+    }
+
 
     /* /** */
     /*  * @expectedException KbizeCli\Sdk\Exception\ForbiddenException */

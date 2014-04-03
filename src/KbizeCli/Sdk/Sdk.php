@@ -53,7 +53,11 @@ class Sdk implements SdkInterface
 
     public function getBoardSettings($boardId)
     {
+        $request = $this->post('get_board_settings', [
+            'boardid' => $boardId,
+        ]);
 
+        return $this->send($request);
     }
 
     public function getBoardActivities($boardId, $fromDate, $toDate, array $parameters = array())
@@ -63,7 +67,12 @@ class Sdk implements SdkInterface
 
     public function createNewTask($boardId, array $parameters = array())
     {
+        $request = $this->post('create_new_task', array_merge(
+            ['boardid' => $boardId],
+            $parameters
+        ));
 
+        return $this->send($request);
     }
 
     public function deleteTask($boardId, $taskId)
@@ -89,9 +98,14 @@ class Sdk implements SdkInterface
 
     }
 
-    public function moveTask($boardId, $taskId, $column, array $parameters = array())
+    public function moveTask($boardId, $taskId, $column = 'Backlog', array $parameters = array())
     {
+        $request = $this->post('move_task', array_merge(
+            ['boardid' => $boardId, 'taskid' => $taskId, 'column' => $column],
+            $parameters
+        ));
 
+        return $this->send($request);
     }
 
     public function editTask($boardId, $taskId, array $parameters = array())

@@ -348,7 +348,8 @@ class AlternateTableHelper extends Helper
         if (!empty($this->headers)) {
             $this->renderRowSeparator();
         }
-        $colors = [false, "\e[48;5;16m"];
+        /* $colors = [false, "\e[48;5;16m"]; //FIXME:! use color only if output support it */
+        $colors = [false, false];
         $alternate = 0;
         foreach ($this->rows as $row) {
             $this->renderRow($row, $this->cellRowFormat, $colors[$alternate++%2]);
@@ -405,6 +406,7 @@ class AlternateTableHelper extends Helper
             return;
         }
 
+        //FIXME:! use color only if output support it
         if ($color) {
             $this->output->write($color);
         }

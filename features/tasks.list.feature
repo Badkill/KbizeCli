@@ -1,6 +1,6 @@
-Feature: Login
-    In order to access to api
-    I need to fetch / use a Kanbanize generated token
+Feature: List
+    In order to view list of kanbanize card
+    I need to use task:list command with right options
 
     Scenario: Project and Board are not requested if they are passed as command options
         Given I am an authenticated user

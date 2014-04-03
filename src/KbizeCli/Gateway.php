@@ -81,6 +81,59 @@ class Gateway implements KbizeInterface
         return $boardStructure;
     }
 
+    public function getLanes($boardId, $useCache = true)
+    {
+        $lanes = [];
+
+        $boardStructure = $this->getBoardStructure($boardId, $useCache);
+
+        foreach ($boardStructure['lanes'] as $lane) {
+            $lanes[] = $lane['lcname'];
+        }
+
+        return $lanes;
+    }
+
+    public function getBoardSettings($boardId, $useCache = true)
+    {
+        $cacheFile = $useCache ? $boardId . DIRECTORY_SEPARATOR . 'boardSettings.yml' : null;
+        $boardSettings = $this->callSdkWithCache('getBoardSettings', [$boardId], $cacheFile);
+
+        return $boardSettings;
+    }
+
+    public function getUsernames($boardId, $useCache = true)
+    {
+        $settings = $this->getBoardSettings($boardId, $useCache);
+
+        return $settings['usernames'];
+    }
+
+    public function getTypes($boardId, $useCache = true)
+    {
+        $settings = $this->getBoardSettings($boardId, $useCache);
+
+        return $settings['types'];
+    }
+
+    public function getTemplates($boardId, $useCache = true)
+    {
+        $settings = $this->getBoardSettings($boardId, $useCache);
+
+        return $settings['templates'];
+    }
+
+    public function createNewTask($boardId, array $parameters)
+    {
+        return $this->sdk->createNewTask($boardId, $parameters);
+    }
+
+    /* public function moveTask($boardId, array $parameters) */
+    public function moveTask($boardId, $taskId, $column = 'Backlog', array $parameters = [])
+    {
+        return $this->sdk->moveTask($boardId, $taskId, $column, $parameters);
+    }
+
     public function callSdk($method, array $args = [])
     {
         return call_user_func_array([$this->sdk, $method], $args);
