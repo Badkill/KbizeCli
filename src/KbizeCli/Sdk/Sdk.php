@@ -77,19 +77,30 @@ class Sdk implements SdkInterface
 
     public function deleteTask($boardId, $taskId)
     {
+        $request = $this->post('delete_task', [
+            'boardid' => $boardId,
+            'taskid' => $taskId,
+        ]);
 
+        return $this->send($request);
     }
 
     public function getTaskDetails($boardId, $taskId, array $parameters = array())
     {
+        $request = $this->post('get_task_details', [
+            'boardid' => $boardId,
+            'taskid' => $taskId,
+        ]);
 
+        return $this->send($request);
     }
 
     public function getAllTasks($boardId, array $parameters = array())
     {
-        $request = $this->post('get_all_tasks', [
-            'boardid' => $boardId,
-        ]);
+        $request = $this->post('get_all_tasks', array_merge(
+            $parameters,
+            ['boardid' => $boardId]
+        ));
         return $this->send($request);
     }
 

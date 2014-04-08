@@ -9,6 +9,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
+        //FIXME:!
         $this->client = $this->getMock('KbizeCli\Http\ClientInterface', array_merge(
             get_class_methods('KbizeCli\Http\ClientInterface'),
             get_class_methods('Guzzle\Http\ClientInterface')
@@ -16,30 +17,6 @@ class SdkTest extends \PHPUnit_Framework_TestCase
 
         $this->request = $this->getMock('KbizeCli\Http\RequestInterface');
         $this->apikey = 'secret-api-key';
-    }
-
-    public function testLoginWithRightCredentialsReturnsAnArray()
-    {
-        $email = 'user@example.com';
-        $password  = 'secretPassword';
-
-        $data = array(
-            'email' => $email,
-            'username' => 'name.surname',
-            'realname' => 'Name Surname',
-            'companyname' => 'Company',
-            'timezone' => '0:0',
-            'apikey' => 'UIcXtWGF1ldjKmSdYi6lP3WN8o1K4hMJQnOLkfTv',
-        );
-
-        $this->requestReturnsJson($data);
-        $this->clientExpectation('login', [
-            'email' => $email,
-            'pass' => $password,
-        ], $this->request);
-
-        $sdk = new Sdk($this->client);
-        $this->assertEquals($data, $sdk->login($email, $password));
     }
 
     /**
@@ -64,74 +41,41 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider methodProvider
      * @expectedException \RuntimeException
      */
-    public function testHtmlResponseTriggersAnException()
+    public function testHtmlResponseTriggersAnException(
+        $method,
+        $arguments,
+        $expectedUrl,
+        $expectedWith
+    )
     {
-        $email = 'user@example.com';
-        $password  = 'secretPassword';
-
         $this->requestReturnsJson('<html>test</html>', 200);
-        $this->clientExpectation('login', [
-            'email' => $email,
-            'pass' => $password,
-        ], $this->request);
+        $this->clientExpectation($expectedUrl, $expectedWith, $this->request);
 
         $sdk = new Sdk($this->client);
-        $sdk->login($email, $password);
+        $sdk->setApikey($this->apikey);
+        call_user_func_array([$sdk, $method], $arguments);
     }
 
     /**
+     * @dataProvider methodProvider
      * @expectedException \RuntimeException
      */
-    public function testExceptionFromClientIsBubbleUpAnException()
+    public function testExceptionFromClientIsBubbleUpAnException(
+        $method,
+        $arguments,
+        $expectedUrl,
+        $expectedWith
+    )
     {
-        $email = 'wrong@email.com';
-        $password  = 'wrongPassword';
-
         $this->requestReturnsException(new \RuntimeException());
-
-        $this->client->expects($this->once())
-            ->method('post')
-            ->will($this->returnValue($this->request));
-
-        $sdk = new Sdk($this->client);
-        $sdk->login($email, $password);
-    }
-
-    public function testGetProjectsAndBoards()
-    {
-        $data = [
-            'foo' => 'bar'
-        ];
-
-        $this->requestReturnsJson($data);
-
-        $this->client->expects($this->once())
-            ->method('post')
-            ->with('get_projects_and_boards')
-            ->will($this->returnValue($this->request));
+        $this->clientExpectation($expectedUrl, $expectedWith, $this->request);
 
         $sdk = new Sdk($this->client);
         $sdk->setApikey($this->apikey);
-        $this->assertEquals($data, $sdk->getProjectsAndBoards());
-    }
-
-    public function testGetBoardStructure()
-    {
-        $data = [
-            'foo' => 'bar'
-        ];
-
-        $this->requestReturnsJson($data);
-
-        $this->clientExpectation('get_full_board_structure', [
-            'boardid' => 42,
-        ], $this->request);
-
-        $sdk = new Sdk($this->client);
-        $sdk->setApikey($this->apikey);
-        $this->assertEquals($data, $sdk->getBoardStructure(42));
+        call_user_func_array([$sdk, $method], $arguments);
     }
 
     /**
@@ -143,54 +87,106 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $sdk->getProjectsAndBoards();
     }
 
-    public function testGetAllTasks()
+    /**
+     * @dataProvider methodProvider
+     */
+    public function testAllMethodsReturnsDataReturnedFromApiResponse(
+        $method,
+        $arguments,
+        $expectedUrl,
+        $expectedWith
+    )
     {
-        $boardId = 42;
-        $data = [
-            'foo' => 'bar'
-        ];
-
-        $this->requestReturnsJson($data);
-
-        $this->client->expects($this->once())
-            ->method('post')
-            ->with('get_all_tasks', [
-                'Content-Type' => 'application/json'
-            ], json_encode(['boardid' => $boardId]))
-            ->will($this->returnValue($this->request));
-
-        $sdk = new Sdk($this->client);
-        $sdk->setApikey($this->apikey);
-        $this->assertEquals($data, $sdk->getAllTasks($boardId));
-    }
-
-    public function testCreationOfTask()
-    {
-        $boardId = 42;
-        $newTaskData = [
-            'title' => 'Test title',
-            'description' => 'Test description',
-        ];
-
         $responseData = [
-            'id' => 10,
+            'foo' => 'bar'
         ];
 
         $this->requestReturnsJson($responseData);
 
-        $this->client->expects($this->once())
-            ->method('post')
-            ->with('create_new_task', [
-                'Content-Type' => 'application/json'
-            ], json_encode(array_merge(
-                ['boardid' => $boardId],
-                $newTaskData
-            )))
-            ->will($this->returnValue($this->request));
+        $this->clientExpectation($expectedUrl, $expectedWith, $this->request);
+
 
         $sdk = new Sdk($this->client);
         $sdk->setApikey($this->apikey);
-        $this->assertEquals($responseData, $sdk->createNewTask($boardId, $newTaskData));
+        $this->assertEquals(
+            $responseData,
+            call_user_func_array([$sdk, $method], $arguments)
+        );
+    }
+
+    public function methodProvider()
+    {
+        return [
+            [
+                'getFullBoardStructure',
+                [42],
+                'get_full_board_structure',
+                ['boardid' => 42]
+            ],
+            [
+                'login',
+                ['email@email.com', 'secret'],
+                'login',
+                ['email' => 'email@email.com', 'pass' => 'secret']
+            ],
+            [
+                'getProjectsAndBoards',
+                [],
+                'get_projects_and_boards',
+                []
+            ],
+            [
+                'getBoardStructure',
+                [42],
+                'get_full_board_structure',
+                ['boardid' => 42]
+            ],
+            [
+                'getFullBoardStructure',
+                [42],
+                'get_full_board_structure',
+                ['boardid' => 42]
+            ],
+            [
+                'getBoardSettings',
+                [42],
+                'get_board_settings',
+                ['boardid' => 42]
+            ],
+            [
+                'createNewTask',
+                [42, [
+                    'title' => 'fake title',
+                    'description' => 'fake description',
+                ]],
+                'create_new_task',
+                ['boardid' => 42, 'title' => 'fake title', 'description' => 'fake description']
+            ],
+            [
+                'deleteTask',
+                [42, 101],
+                'delete_task',
+                ['boardid' => 42, 'taskid' => 101]
+            ],
+            [
+                'getAllTasks',
+                [42, ['foo' => 'bar']],
+                'get_all_tasks',
+                ['foo' => 'bar', 'boardid' => 42]
+            ],
+            [
+                'getTaskDetails',
+                [42, 101],
+                'get_task_details',
+                ['boardid' => 42, 'taskid' => 101]
+            ],
+            [
+                'moveTask',
+                [42, 101, 'foo', ['lane' => 'bar']],
+                'move_task',
+                ['boardid' => 42, 'taskid' => 101, 'column' => 'foo', 'lane' => 'bar']
+            ],
+        ];
     }
 
     private function clientExpectation($url, $data)
